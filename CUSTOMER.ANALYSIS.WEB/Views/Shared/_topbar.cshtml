@@ -1,0 +1,72 @@
+﻿
+@using Microsoft.AspNetCore.Http
+@{
+    int CantidadNotificaciones = Context.Session.GetInt32("CantidadNotificaciones") ?? 0;
+    string FotoBase64 = Context.Session.GetString("FotoBase64");
+}
+
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href=@Url.Action("Index", "Dashboard") class="logo logo-dark">
+                    <span class="logo-sm">
+                        @*<img src="~/assets/images/logo.svg" alt="" height="22">*@
+                    </span>
+                    <span class="logo-lg">
+                        @*<img src="~/assets/images/logo-dark.png" alt="" height="17">*@
+                    </span>
+                </a>
+
+                <a href=@Url.Action("Index", "Dashboard") class="logo logo-light">
+                    <span class="logo-sm">
+                        @*<img src="~/assets/images/frio-mar/isotipo.png" alt="" height="22">*@
+                        <b style="color: white; font-size: 20px">INTERCOM</b>
+                    </span>
+                    <span class="logo-lg">
+                        @*<img src="~/assets/images/frio-mar/logo.png" alt="" height="19">*@
+                        <b style="color: white; font-size: 20px">INTERCOM</b>
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+
+        </div>
+
+        <div class="d-flex">
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="bx bx-bell bx-tada"></i>
+                    <span id="span-cantidad-notificaciones" class="badge bg-danger rounded-pill">@CantidadNotificaciones</span>
+                </button>
+                <div id="div-notificaciones" style="border-top-left-radius: 15px" class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
+                    
+                </div>
+            </div>
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src="data:image/png;base64, @FotoBase64" @* src="~/assets/images/users/avatar-1.jpg"*@
+                         alt="Header Avatar">
+                    <span class="d-none d-xl-inline-block ms-1" key="t-henry">@User.Identity.Name</span>
+                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Index"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Mi Perfil</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" asp-controller="Account" asp-action="LogOff"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Cerrar sesión</span></a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</header>

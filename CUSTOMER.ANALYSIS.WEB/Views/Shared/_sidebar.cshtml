@@ -1,0 +1,92 @@
+﻿
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+    @using Microsoft.AspNetCore.Http
+
+    <div data-simplebar class="h-100">
+
+        @{
+            var menu = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.Menu>>((@Context.Session.GetString("Menu") ?? ""));
+
+            string url = "";
+            string urlBase = @Url.Action("Index", "Dashboard");
+            if (urlBase != "/")
+            {
+                urlBase += "/";
+            }
+        }
+        @{
+            var userClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.UserData);
+            var user = "Admin";
+        }
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <ul class="metismenu list-unstyled" id="side-menu">
+
+                @if (menu != null && menu.Any())
+                {
+                    @foreach (var item in menu.OrderBy(x => x.Order))
+                    {
+                        url = urlBase + item.Url;
+                        if (item.SubMenu.Count() == 0)
+                        {
+                            <li>
+                                <a href="@url" class="waves-effect">
+                                    <i class="@item.Icon"></i>
+                                    <span>@item.Label</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="@item.Icon"></i>
+                                    <span>@item.Label</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    @foreach (var subitem in item.SubMenu.OrderBy(x => x.Order))
+                                    {
+                                        url = urlBase + subitem.Url;
+                                        @if (subitem.SubMenu.Count() == 0)
+                                        {
+                                            <li id="id-li-100">
+                                                <a href="@url" class="waves-effect">
+                                                    <span>@subitem.Label</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                    <span>@subitem.Label</span>
+                                                </a>
+                                                <ul class="sub-menu" aria-expanded="true">
+                                                    @foreach (var subitem2 in subitem.SubMenu.OrderBy(x => x.Order))
+                                                    {
+                                                        url = urlBase + subitem2.Url;
+                                                        <li>
+                                                            <a href="@url" class="waves-effect">
+                                                                <span>@subitem2.Label</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                    }
+                }
+            </ul>
+
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->
