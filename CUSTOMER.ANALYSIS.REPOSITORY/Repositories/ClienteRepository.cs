@@ -15,9 +15,9 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
             this._context = context;
         }
 
-        public List<Cliente> GetAll() 
+        public List<Cliente>? GetAll() 
         {
-            return _context.Cliente.Where(x => x.Estado == true).ToList();
+            return _context.Cliente?.Where(x => x.Estado == true)?.ToList();
         }
 
     }

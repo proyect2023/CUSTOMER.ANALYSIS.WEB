@@ -1,0 +1,192 @@
+﻿@model CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.PerfilModel
+
+@{
+    ViewBag.Title = "Perfil";
+    ViewBag.pTitle = "Perfil";
+    ViewBag.pageTitle = "Configuración";
+
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                 <div class="row text-center">
+                    <div class="col-12">
+                        <img id="ImagenBase64-panel" 
+                                    src="data:image/png;base64, @Model.ImagenBase64" 
+                                    class="img-fluid img-thumbnail rounded-circle" 
+                                    style="height: 250px; width: 250px"
+                                    alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <form asp-action="Index" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*<input asp-for="ImagenBase64" type="hidden" />*@
+
+                    <div class="mb-3 row">
+                        <label asp-for="Usuario" class="col-sm-2 col-form-label">Usuario: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Usuario" class="form-control" disabled />
+                             <span asp-validation-for="Usuario" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="Nombre" class="col-sm-2 col-form-label">Nombre: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="Apellido" class="col-sm-2 col-form-label">Apellido: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Apellido" class="form-control" />
+                            <span asp-validation-for="Apellido" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="CorreoElectronico" class="col-sm-2 col-form-label">Correo Electrónico: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="CorreoElectronico" class="form-control" />
+                            <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="Telefono" class="col-sm-2 col-form-label">Teléfono: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Telefono" class="form-control" />
+                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="Direccion" class="col-sm-2 col-form-label">Dirección: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Direccion" class="form-control" />
+                            <span asp-validation-for="Direccion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label asp-for="Imagen" class="col-sm-2 col-form-label">Imagen: <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Imagen" class="form-control" onchange="loadFile(event)" accept="image/*"  />
+                           <span asp-validation-for="Imagen" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-success">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            Tareas asignadas
+        </div>
+        <div class="row">
+            <div class="col">
+                <table id="table-actividades" class="table dt-responsive table-hover table-sm table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Marcar leído</th>
+                            <th>Tarea</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+ <script>
+     $(document).ready(function () {
+            //initActividades();
+     });
+
+     var loadFile = function (event) {
+        //var output = document.getElementById('ImagenBase64');
+        var output = document.getElementById('ImagenBase64-panel');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+
+    //function initActividades() {
+    //    var table = $("#table-actividades").DataTable({
+    //        "language": {
+    //            "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json",
+    //        },
+    //        "pageLength": 5,
+    //        "aoColumns": [
+    //            {
+    //                sTitle: "Acciones ", mData: 'id', bVisible: true, sWidth: "50px", bSortable: false, sClass: "text-center",
+    //                mRender: function (data, type, full) {
+    //                    var buttons = '';
+    //                    buttons += `
+    //                        <a class="btn btn-info" href="@Url.Action("Registrar", "Permisos")/${data}" asp-route-Id="">
+    //                            <i class="fa fa-edit"></i>
+    //                        </a>
+    //                        <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${data}');">
+    //                            <i class="fa fa-trash"></i>
+    //                        </button>
+    //                        `;
+    //                    return buttons;
+    //                }
+    //            },
+    //            { sTitle: "Tarea", mData: 'tarea', sClass: "text-center", }
+    //        ],
+    //        "columnDefs": [
+    //            {
+    //                //targets: 0,
+    //                sortable: false,
+    //            }
+    //        ]
+    //    });
+    //}
+
+    //function cargarTabla(){
+    //    IniciarLoading();
+    //    $.ajax({
+    //        url: '@Url.Action("Get", "Perfil")',
+    //        type: 'GET',
+    //        cache: false,
+    //        success: function (result) {
+    //            DetenerLoading();
+    //            if (result.estado) {
+    //                var oTable = $('#table-actividades').dataTable();
+    //                oTable.fnClearTable();
+    //                $.each(result.data, function (i, item) {
+    //                    oTable.fnAddData(item);
+    //                });
+    //            } else {
+    //                MensajeErrorSwal(result.mensaje);
+    //            }
+    //        },
+    //        error: function (jqXHR, textStatus, error) {
+    //            MsgAjaxError(error);
+    //            DetenerLoading();
+    //        }
+    //    });
+    //}
+ 
+                    </script>    
+}

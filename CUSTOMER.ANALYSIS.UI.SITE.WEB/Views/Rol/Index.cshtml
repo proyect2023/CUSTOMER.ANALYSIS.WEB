@@ -1,0 +1,261 @@
+﻿@model IEnumerable<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.RolAppResultDto>
+
+@{
+    ViewBag.Title = "Cargos";
+    ViewBag.pTitle = "Cargos";
+    ViewBag.pageTitle = "Configuración";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <link href="~/css/kendo.default-v2.min.css" rel="stylesheet" />
+}
+
+<div class="card">
+    <div class="card-body">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="btnGuardar">
+            Nuevo
+        </button>
+        <table class="table table-bordered table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th></th>
+                    <th>Nombre</th>
+
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+
+                            <button type="button" class="btn btn-info btn-editar" data-toggle="modal" data-target="#myModal" id="btnEditar">
+                                <i class="fa fa-edit"></i>
+                                @*<img alt="Editar" src="../images/btn_edit.png" width="25">*@
+                            </button>
+                            <button type="button" class="btn btn-primary btn-asignar" data-toggle="modal" id="Asignar">
+                                <i class="fa fa-plus"></i>
+                                @*<img alt="Asignar Permisos" src="../images/btn_rol.png" width="25">*@
+                            </button>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdRol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>*@
+                        <td>
+                            @(item.Estado ? Html.Raw("ACTIVO") : Html.Raw("INACTIVO"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--  Large modal example -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_asignar_permisos" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Asignación de permisos al rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body with-padding">
+                <form class="form-horizontal">
+                    <div style="max-height: 400px;overflow: auto;margin-top:-10px;margin-bottom:-10px">
+                        <div class="demo-section k-content">
+                            <div>
+                                <h5><strong>Lista de permisos disponibles:</strong></h5>
+                                <div id="treeview"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btnAsignar" type="button" class="btn btn-primary">Asignar</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+@await Html.PartialAsync("/Views/Rol/Guardar.cshtml", new CUSTOMER.ANALYSIS.UI.WEB.SITE.Models.RolViewModel())
+
+@section Scripts {
+
+    <script type="text/javascript" src="~/js/kendo.all.min.js"></script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var table = $(".table").DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                },
+                "pageLength": 5,
+                "lengthMenu": [5, 10, 25, 50, 100],
+                "columnDefs": [
+                    {
+                        "targets": [1],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ]
+            });
+
+            $('.table tbody').on('click', 'button[id="btnEditar"]', function () {
+                $("#tituloMant").html('<i class="glyphicon glyphicon-edit"></i> Editar Registro</h5 >');
+                var data = table.row($(this).parents('tr')).data();
+                $("#IdRol").val(data[1]);
+                $("#Nombre").val(data[2]);
+                $("#Estado").val(data[3] == 'ACTIVO' ? '1' : '0').trigger("change");
+            });
+
+            $('.table tbody').on('click', 'button[id="Asignar"]', function () {
+                var data = table.row($(this).parents('tr')).data();
+                var idRol = data[1];
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("ConsultarRolVentanas", "Rol")",
+                    data: { IdRol: idRol },
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#treeview .k-checkbox-wrapper input").prop("checked", false).trigger("change");
+                        var treeview = $("#treeview").data("kendoTreeView");
+                        //console.log(treeview);
+
+                        $.each(result.data, function (i, item) {
+                            try {
+                                var getitem = treeview.dataSource.get(item.id);
+                                //data1.set("checked", true);
+
+                                //console.log(getitem);
+                                //var data1 = treeview.dataSource.getByUid(getitem.uid);
+                                //console.log(data1);
+                                if (getitem) {
+                                    //console.log(item.id, getitem);
+                                    getitem.set("checked", true);
+                                }
+
+                            } catch (e) {
+                                console.log(item);
+                            }
+                        });
+
+                        $('#modal_asignar_permisos').attr('data-edoc-id', idRol);
+                        $('#modal_asignar_permisos').attr('data-edoc-nombre', data["nombre"]);
+                        $("#modal_asignar_permisos").modal("show");
+                    },
+                    error: function (result) {
+                        MsgAjaxError(result);
+                    }
+                });
+            });
+
+            var dataSource = new kendo.data.HierarchicalDataSource({
+                transport: {
+                    read: {
+                        url: "@Url.Action("ConsultarVentanasActivas", "Rol")",
+                        dataType: "json",
+                        type: "POST"
+                    }
+                },
+                schema: {
+                    data: "data",
+                    model: {
+                        id: "idPermiso",
+                        children: "items",
+                    }
+                }
+            });
+
+            $("#treeview").kendoTreeView({
+                checkboxes: {
+                    checkChildren: true
+                },
+                loadOnDemand: true,
+                dataSource: dataSource,
+                dataTextField: "nombre",
+                dataBound: function (e) {
+                    var treeView = $('#treeview').data('kendoTreeView');
+                    treeView.expand(".k-item");
+                }
+            });
+
+            //var treeview = $("#treeview").data("kendoTreeView");
+            //treeview.expand(".k-item");
+
+            function checkedNodeIds(nodes, checkedNodes) {
+
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].checked) {
+                        checkedNodes.push(nodes[i].id);
+                    } 
+
+                    if (nodes[i].hasChildren) {
+                        checkedNodeIds(nodes[i].children.view(), checkedNodes);
+                    }
+                }
+            }
+
+            $("#btnAsignar").click(function (e) {
+                e.preventDefault();
+
+                var treeView = $("#treeview").data("kendoTreeView");
+                var checkedNodes = [];
+                checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+                if (checkedNodes.length == 0) { MsgActionResultError("No hay permisos seleccionados."); return; }
+                var idRol = $('#modal_asignar_permisos').attr('data-edoc-id');
+                var nombre = $('#modal_asignar_permisos').attr('data-edoc-nombre');
+                var idVentanas = checkedNodes.join(";");
+
+                IniciarLoading();
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("AsignaRolVentanas", "Rol")",
+                    data: { IdRol: idRol, Nombre: nombre, IdVentanas: idVentanas },
+                    success: function (result) {
+                        MensajeExitoso(result);
+                        $("#modal_asignar_permisos").modal("hide");
+                    },
+                    error: function (result) {
+                        MsgAjaxError(result);
+                    }
+
+                });
+            });
+
+            $("#btnGuardar").click(function () {
+                $("#tituloMant").html('<i class="glyphicon glyphicon-plus"></i> Nuevo Registro</h5>');
+                $("#IdRol").val(0);
+                $("#Nombre").val('');
+                //$("#Descripcion").val('');
+                $("#Estado").val('1').trigger("change");
+                $("#myModal").modal('show');
+            });
+
+            $(".btn-editar").click(function () {
+                $("#myModal").modal('show');
+            });
+
+            $(".btn-asignar").click(function () {
+                $("#modal_asignar_permisos").modal('show');
+            });
+        })
+
+    </script>
+    @Html.Raw(TempData["msg"])
+}

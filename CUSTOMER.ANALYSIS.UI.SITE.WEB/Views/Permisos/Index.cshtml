@@ -1,0 +1,145 @@
+﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.PermisoAppResultDto>
+
+@{
+    ViewBag.Title = "Permisos";
+    ViewBag.pTitle = "Permisos";
+    ViewBag.pageTitle = "Configuración";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <a class="btn btn-success" asp-controller="Permisos" asp-action="Registrar">Nuevo</a>
+        <table class="datatable table dt-responsive table-hover table-sm table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th>Acción</th>
+                    <th>Código</th>
+                    <th>Nombre Abreviado</th>
+                    <th>Url</th>
+                    <th>Icono</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var item in Model)
+                {
+                <tr>
+                    <td class="text-center">
+                            <a class="btn btn-info" asp-controller="Permisos" asp-action="Registrar" asp-route-Id="@item.Id">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-eliminar" value="@item.Id">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                    </td>
+                    <td class="text-center">
+                        @item.Codigo
+                    </td>
+                    <td>
+                        @item.NombreAbreviado
+                    </td>
+
+                    <td >
+                        @item.Url
+                    </td>
+                    <td class="text-center">
+                        @if (!string.IsNullOrEmpty(@item.Icono))
+                        {
+                            <span class="badge bg-info"><i  class="@item.Icono fa-2x"></i></span>
+                        }
+                    </td>
+                </tr>
+                }*@
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+<script>
+        $(document).ready(function () {
+            cargarTabla();
+            var table = $(".datatable").DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                },
+                "pageLength": 5,
+                "lengthMenu": [5, 10, 25, 50, 100],
+                "order": [[1, 'asc']],
+                "aoColumns": [
+                    {
+                        sTitle: "Acciones ", mData: 'id', bVisible: true, sWidth: "50px", bSortable: false, sClass: "text-center",
+                        mRender: function (data, type, full) {
+                            var buttons = '';
+                            buttons +=`
+                            <a class="btn btn-info" href="@Url.Action("Registrar", "Permisos")/${data}" asp-route-Id="">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${data}');">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            `;
+                            return buttons;
+                        }
+                    },
+                    { sTitle: "Código", mData: 'codigo', sClass: "text-center", },
+                    { sTitle: "Nombre Abreviado", mData: 'nombreAbreviado', sClass: "text-center", },
+                    { sTitle: "Url", mData: 'url', sClass: "text-center", },
+                    {
+                        sTitle: "Icono", mData: 'icono', bVisible: true, sWidth: "50px", sClass: "text-center",
+                        mRender: function (data, type, full) {
+                            if (data) {
+                                return `<span class="badge bg-info"><i  class="${data} fa-2x"></i></span>`;
+                            } else{
+                                return '';
+                            }
+                        }
+                    },
+                ],
+                "columnDefs": [
+                    {
+                        targets: 0,
+                        sortable: false,
+                    }
+                ]
+            });
+        });
+
+        function cargarTabla(){
+            IniciarLoading();
+            $.ajax({
+                url: '@Url.Action("Get", "Permisos")',
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    DetenerLoading();
+                    if (result.estado) {
+                        var oTable = $('.datatable').dataTable();
+                        oTable.fnClearTable();
+                        $.each(result.data, function (i, item) {
+                            oTable.fnAddData(item);
+                        });
+                    }else{
+                        MensajeErrorSwal(result.mensaje);
+                    }
+                },
+                error: function (jqXHR, textStatus, error) {
+                    MsgAjaxError(error);
+                    DetenerLoading();
+                }
+            });
+        }
+
+        function eliminarRegistro(id){
+            //var id = $(this).attr("value");
+            ConfirmacionEliminar("@Url.Action("Eliminar", "Permisos")", '@Url.Action("Index", "Permisos")', { Id: id } );
+        }
+    
+</script>
+    @Html.Raw(TempData["msg"])
+}

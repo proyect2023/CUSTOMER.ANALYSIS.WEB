@@ -1,0 +1,308 @@
+﻿/*body {
+    font-family: Poppins;
+    background-color: #fff;
+    color: #666;
+}
+*/
+/*STYLE LOGIN*/
+
+.landingImg {
+    /*background-image: url('../../img/landing-2.jpg');*/
+    
+    /*opacity: 0.5;*/
+}
+
+.mainContent {
+    opacity: 1;
+}
+
+.account-pages {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #666666;
+}
+
+.mainContent {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    border-radius: 15px;
+    overflow: hidden;
+    min-height: 60vh;
+}
+
+.logoLogin {
+    /*background-image: url('../images/frio-mar/logo-lg.jpeg');*/
+    background-size: cover;
+    background-position: bottom center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: start;
+}
+
+
+
+.mainLogo {
+    width: 50%;
+    padding-top: 50px;
+}
+
+.mainLogo img {
+    width: 100%;
+}
+
+.contentRight {
+    background-color: #e6e6e6;
+    padding: 80px 50px;
+}
+
+.titleLogin {
+    font-size: 25pt;
+    font-weight: 600;
+}
+
+.login label {
+    font-weight: 600;
+}
+
+.login input, .login input:focus, .login input:active {
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    border-bottom: 1px solid #999;
+    border-radius: 0;
+}
+
+.login .btn-info {
+    background-color: #03a8b5;
+    border: none;
+    width: 60%;
+    padding: 15px;
+    border-radius: 11px;
+}
+
+.login .btn-rounded {
+    color: #666;
+    font-size: 8pt;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer {
+    width: 100%;
+    height: 35px;
+    font-size: 8pt;
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 0;
+    background-color: #f2f2f2;
+}
+
+/*END STYLE LOGIN*/
+
+/*STYLE DASHBOARD*/
+/*.row {
+    margin: auto;
+}
+
+.row>* {
+    padding: 0;
+}*/
+.simplebar-content-wrapper {
+    height: 100%;
+    overflow: hidden;
+}
+
+#sidebar-menu ul li a:hover, #sidebar-menu ul li a:active, #sidebar-menu ul li a:focus, .mm-active .active {
+    background-color: rgba(28, 51, 94,1);
+}
+
+.nav-tabs {
+    border: none;
+}
+
+.card {
+    /*background-color: #f2f2f2;*/
+    border-radius: 10px;
+}
+
+.card-body {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+.card-body, .card .col-sm-12, .renderbody .col-12 {
+    /*padding: 15px;*/
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.odd {
+    background-color: #e6e6e6;
+    border-style: none;
+    border-spacing: 1;
+}
+
+/*************************INICIO ESTILOS DEL MENU DE ACCOUNT********************************/
+/*.dropdown-menu-end {
+    background: linear-gradient(45deg, rgba(242,116,5,1) 0%, rgba(242,159,4,1) 70%);
+    color: #fff;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+}
+
+.dropdown-item {
+    color: #fff !important;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background: transparent;
+    color: #666 !important;
+}
+
+.dropdown-item .text-danger {
+    color: #fff !important;
+}
+
+.dropdown-item:focus .text-danger, .dropdown-item:hover .text-danger {
+    color: #666 !important;
+}*/
+/*************************FIN ESTILOS DEL MENU DE ACCOUNT********************************/
+
+
+/*.btn-success, .btn-primary, .btn-info, .btn-dark, .btn-secondary, .btn-danger {
+    color: #fff;
+    background-color: #f24405;
+    border-color: transparent;
+}*/
+
+/*.swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel {
+    color: #fff;
+    background-color: #f24405 !important;
+}*/
+
+/*.btn-success:hover, .btn-primary:hover, .btn-info:hover, .btn-dark:hover, .btn-secondary:hover, .btn-danger:hover {
+    color: #fff;
+    background-color: #f27405;
+    border-color: transparent;
+}*/
+
+/*.swal2-styled.swal2-confirm:hover, .swal2-styled.swal2-cancel:hover, .swal2-styled:focus {
+    background-color: #f27405 !important;
+    box-shadow: none;
+    border: 3px solid #fff;
+}*/
+
+.btn-outline-success {
+    color: #03a8b5;
+    border-color: transparent;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+}
+
+.btn-outline-success:hover, .btn-check:focus + .btn-outline-success, .btn-outline-success:focus {
+    background-color: #f29f04;
+    color: #fff;
+    border-color: transparent;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+}
+
+/*INICIO ICONO NOTIFICACIONES*/
+.noti-icon i {
+    /*color: #f29f04;*/
+}
+/*FIN ICONO NOTIFICACIONES*/
+
+.modal-content {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/*.modal-header {
+    background-color: rgba(242,159,4,1) !important;
+    padding-bottom: 7px !important;
+    padding-top: 7px !important;
+    border: none;
+}*/
+
+.modal-header {
+    background-color: #0b1c3c !important;
+    padding-bottom: 7px !important;
+    padding-top: 7px !important;
+    border: none;
+}
+
+.modal-content {
+    border: hidden !important;
+}
+
+.modal-title, .close {
+    color: white !important;
+}
+
+.modal-body, .swal2-popup {
+    /*background: linear-gradient(0deg, rgba(242,116,5,1) 0%, rgba(242,159,4,1) 70%);
+    border-radius: 15px;*/
+}
+
+    .modal-body label {
+        /*color: #fff;*/
+    }
+
+    .modal-body .form-control {
+        margin-bottom: 5px;
+    }
+
+.modal-footer {
+    border: none;
+}
+
+table.dataTable td, table.dataTable th {
+    vertical-align: middle;
+}
+/*
+.swal2-icon.swal2-question {
+    border-color: #fff;
+    background-color: #f24405;
+}
+
+.swal2-icon.swal2-question, .swal2-title, .swal2-content {
+    color: #fff;
+}*/
+
+@media (min-width: 1200px) {
+    /*STYLE LOGIN*/
+
+    .login .container, .login .container-lg, .login .container-md, .login .container-sm, .login .container-xl, .login .container-xxl {
+        max-width: 960px;
+    }
+
+    /*END STYLE LOGIN*/
+}
+
+.select2-container.select2-container--default.select2-container--open {
+    z-index: 5000;
+}
+
+/*.table-scrollX {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}*/
+
+.bg-dark {
+    background-color: rgba(28, 51, 94,1) !important;
+}

@@ -1,0 +1,85 @@
+﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.NotificacionAppResultDto>
+@{
+    int CantidadNotificaciones = 0;
+    DateTime fechaActual = CUSTOMER.ANALYSIS.APPLICATION.CORE.Utilities.Utilidades.GetHoraActual();
+}
+
+<div class="p-2" style="background-color: rgba(12, 28, 60,1); border-top-left-radius: 15px ">
+        <div class="row align-items-center ">
+            <div class="col text-center">
+                <h6 class="m-0 p-0" style="color: white !important"> Notificaciones </h6>
+            </div>
+        </div>
+    </div>
+<div data-simplebar style="max-height: 230px;">
+    @if (Model != null && Model.Any())
+    {
+        CantidadNotificaciones = Model.Count();
+        @foreach (var item in Model)
+        {
+            <div id="div-notificacion-@item.Id">
+                <a href="javascript: void(0);" class="text-reset notification-item">
+                    <div class="d-flex">
+                        <div class="avatar-xs me-3">
+                            <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                <i class="bx bx-cart"></i>
+                            </span>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1" key="t-your-order">@item.Titulo</h6>
+                            <div class="font-size-12 text-muted">
+                                <div class="mb-1 text-justify">
+                                    @Html.Raw(@item.Cuerpo)
+                                </div>
+                                @*<p class="mb-1" key="t-grammer">@item.Cuerpo</p>*@
+                                <div class="row">
+                                    <p class="col-9 mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">@item.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</span></p>
+                                    @if (!item.NotificacionLeida)
+                                    {
+                                        <button value="@item.Id" class="col-2 float-left btn btn-outline-success btn-ver-notificacion fas fa-check-circle">
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <div>
+            <a href="javascript: void(0);" class="text-reset notification-item">
+                <div class="d-flex">
+                    <div class="media-body">
+                        <h6 class="mt-0 mb-1">Información</h6>
+                        <div class="font-size-12 text-muted">
+                            <p class="mb-1">El usuario no tienes notificaciones registradas para mostrar.</p>
+                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>@CUSTOMER.ANALYSIS.APPLICATION.CORE.Utilities.Utilidades.GetHoraActual().ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+@*<div class="p-2 border-top d-grid">
+    <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+            <i class="mdi mdi-arrow-right-circle me-1"></i> <span key="t-view-more">View More..</span>
+        </a>
+</div>*@
+
+<script>
+    $(document).ready(function () {
+        $("#span-cantidad-notificaciones").text("@CantidadNotificaciones");
+
+        $(".btn-ver-notificacion").click(function(){
+            var val = $(this).val();
+            $.get("@Url.Action("MarcarNotificacion", "Dashboard")", { Id: val }, function (result) {
+                MensajeExitoso("Notificación leída", 'bottom-right');
+                $("#div-notificaciones").empty().html(result);
+            }).fail(function (error) { MsgAjaxError(error); });
+        });
+    });
+</script>

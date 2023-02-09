@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ffcd25c2-6127-4c71-8434-e733fb566048</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+		<PackageReference Include="Luilliarcec.Identification.Ecuador" Version="1.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="NLog" Version="5.1.1" />
+		<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.APPLICATION.CORE\CUSTOMER.ANALYSIS.APPLICATION.CORE.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING\CUSTOMER.ANALYSIS.CROSSCUTTING.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.REPOSITORY\CUSTOMER.ANALYSIS.REPOSITORY.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="GS.IO">
+			<HintPath>..\Libraries\GS.IO.dll</HintPath>
+		</Reference>
+		<Reference Include="GS.TOOLS">
+			<HintPath>..\Libraries\GS.TOOLS.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	
+</Project>

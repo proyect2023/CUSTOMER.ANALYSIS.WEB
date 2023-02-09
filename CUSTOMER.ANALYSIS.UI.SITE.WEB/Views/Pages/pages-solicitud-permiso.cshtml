@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Solicitud Permisos";
+    ViewBag.pTitle = "Acceso Denegado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row text-center">
+    <h4><b>Estimado Usuario, usted no tiene permisos para este módulo, por favor contactarse con el administrador de su cuenta: @ViewBag.MailAdministrador</b></h4>
+
+    @*<div class="col-3" >
+        </div>
+        <div class="col-6" style="background-color: red">
+            a
+        </div>
+        <div class="col-3" >
+
+        </div>*@
+</div>
+
+@section Scripts{ <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+}
