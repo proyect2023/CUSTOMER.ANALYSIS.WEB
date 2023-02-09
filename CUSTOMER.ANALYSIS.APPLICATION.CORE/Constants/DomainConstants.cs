@@ -14,6 +14,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Constants
 
         public const string MENSAJE_CAMPO_REQUIRED = "Este campo es requerido";
         public const string MENSAJE_CAMPO_MAX_LENGTH = "Ha excedido la capacidad máxima de caracteres";
+        public const string MENSAJE_CAMPO_MIN_LENGTH = "La cantidad de caracteres no es suficiente";
         public const string MENSAJE_CAMPO_EMAIL_ADDRESS = "El correo electrónico ingresado no es correcto";
 
         public const string COMPONENTE_NAME = "ANALISIS CLIENTE INTERCOM";

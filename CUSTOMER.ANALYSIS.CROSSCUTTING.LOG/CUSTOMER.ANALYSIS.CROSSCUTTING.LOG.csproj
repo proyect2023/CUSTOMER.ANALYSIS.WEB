@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NLog" Version="5.1.1" />
+		<PackageReference Include="NLog.Extensions.AzureBlobStorage" Version="4.0.0" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING\CUSTOMER.ANALYSIS.CROSSCUTTING.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="GS.TOOLS">
+			<HintPath>..\Libraries\GS.TOOLS.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	
+</Project>

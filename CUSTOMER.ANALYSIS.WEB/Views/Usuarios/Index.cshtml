@@ -1,0 +1,80 @@
+﻿
+
+@model IEnumerable<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.UsuariosAppResultDto>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@{
+    ViewBag.Title = "Usuarios";
+    ViewBag.pTitle = "Usuarios";
+    ViewBag.pageTitle = "Index";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <a asp-action="Create" class="btn btn-success">Nuevo</a>
+        <table class="datatable table dt-responsive table-hover table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Acción</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Cédula</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Cargo</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.IdUsuario" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                            <button type="button" class="btn btn-danger btn-eliminar" value="@item.IdUsuario"><i class="fa fa-trash"></i></button>
+                        </td>
+                        <td>@item.Nombre @item.Apellido</td>
+                        <td>@Html.DisplayFor(modelItem => item.Usuario)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Cedula)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NombreRol)</td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            var table = $(".datatable").DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                },
+                "pageLength": 5,
+                "lengthMenu": [5, 10, 25, 50, 100],
+                "order": [[1, 'asc']],
+                "columnDefs": [
+                    {
+                        targets: 0,
+                        sortable: false,
+                    }
+                ]
+            });
+
+            $(".btn-eliminar").click(function () {
+                var id = $(this).attr("value");
+                console.log(id)
+                ConfirmacionEliminar("@Url.Action("Eliminar", "Usuarios")", '@Url.Action("Index", "Usuarios")', { Id: id } );
+            });
+        });
+    </script>
+    @Html.Raw(TempData["msg"])
+}

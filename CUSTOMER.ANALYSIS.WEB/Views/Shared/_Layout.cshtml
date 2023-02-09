@@ -61,7 +61,7 @@
         @Html.AntiForgeryToken()
     </div>
     @RenderSection("externalhtml", required: false)
-    @await Html.PartialAsync("~/Views/Shared/_footer.cshtml")
+    @*@await Html.PartialAsync("~/Views/Shared/_footer.cshtml")*@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     @await Html.PartialAsync("~/Views/Shared/_vendor_scripts.cshtml")
 

@@ -16,7 +16,6 @@
             public string NombreArchivo { get; set; }
             public string Extension { get; set; }
         }
-
         internal sealed class DBSettings
         {
             public string DataSource { get; set; }
@@ -43,12 +42,10 @@
             public short Destino { get; set; }
             public IOAzureBlobSettings AzureBlob { get; set; }
         }
-
         internal sealed class IOAzureBlobSettings
         {
             public string ConnectionString { get; set; }
         }
-
         internal sealed class LogSettings
         {
             public bool Habilitar { get; set; }
@@ -70,19 +67,16 @@
             public string UserId { get; set; }
             public string Password { get; set; }
         }
-
         internal sealed class LogAzureSettings
         {
             public string ConnectionString { get; set; }
             public string ContainerName { get; set; }
         }
-
         internal sealed class RedisSettings
         {
             public short Destino { get; set; }
             public RedisAzureSettings AzureRedis { get; set; }
         }
-
         internal sealed class RedisAzureSettings
         {
             public string ConnectionString { get; set; }

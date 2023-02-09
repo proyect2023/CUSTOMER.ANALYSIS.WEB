@@ -20,5 +20,11 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\CUSTOMER.ANALYSIS.APPLICATION.CORE\CUSTOMER.ANALYSIS.APPLICATION.CORE.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="GS.TOOLS">
+	    <HintPath>..\Libraries\GS.TOOLS.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 	
 </Project>

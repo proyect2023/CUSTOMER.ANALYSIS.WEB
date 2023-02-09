@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Luilliarcec.Identification.Ecuador" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.31" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
       <PrivateAssets>all</PrivateAssets>
@@ -13,11 +14,16 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	  <PackageReference Include="NLog" Version="5.1.1" />
 	  <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CUSTOMER.ANALYSIS.APPLICATION.CORE\CUSTOMER.ANALYSIS.APPLICATION.CORE.csproj" />
+    <ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG.csproj" />
+    <ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING\CUSTOMER.ANALYSIS.CROSSCUTTING.csproj" />
+    <ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.csproj" />
+    <ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE.csproj" />
     <ProjectReference Include="..\CUSTOMER.ANALYSIS.REPOSITORY\CUSTOMER.ANALYSIS.REPOSITORY.csproj" />
   </ItemGroup>
 

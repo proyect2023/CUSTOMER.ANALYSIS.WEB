@@ -21,7 +21,7 @@ function initMap(initialData = []) {
 
 function getClientes() {
     $.get(urlClientes).done(function (response) {
-        console.log(response);
+        //console.log(response);
         initMap(getAllPoints(response));
     }).fail(function (error) {
         console.error(error);
@@ -33,7 +33,7 @@ function getAllPoints(initialData = []) {
     initialData.forEach(x => {
         locs.push(new google.maps.LatLng(x.latitud, x.longitud));
     });
-    console.log(locs);
+    //console.log(locs);
     return locs;
 }
 

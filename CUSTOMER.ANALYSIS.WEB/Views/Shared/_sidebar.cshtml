@@ -6,7 +6,7 @@
     <div data-simplebar class="h-100">
 
         @{
-            var menu = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.Menu>>((@Context.Session.GetString("Menu") ?? ""));
+            var menu = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.Menu>>((@Context.Session.GetString("Menu") ?? ""));
 
             string url = "";
             string urlBase = @Url.Action("Index", "Dashboard");

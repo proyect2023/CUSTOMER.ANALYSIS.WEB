@@ -1,10 +1,9 @@
 ﻿@{
     ViewBag.Title = "Cliente";
     ViewBag.pTitle = "Cliente";
-    ViewBag.pageTitle = "Configuración";
+    ViewBag.pageTitle = "Cliente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    string apiKey = "AIzaSyB76UNa5X7a22YUKDW-PlQ0nvcbH1WYUt8";
 }
 
 @section Styles {
@@ -45,7 +44,7 @@
 
     <!-- Inicio Google Maps -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap&libraries=visualization&v=weekly" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.ApiKeyGoogle&callback=initMap&libraries=visualization&v=weekly" defer></script>
     <script src="~/js/heatmap.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
     <!-- Fin Google Maps -->
 

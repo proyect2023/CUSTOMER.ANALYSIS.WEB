@@ -1,0 +1,92 @@
+﻿@model CUSTOMER.ANALYSIS.UI.WEB.SITE.Models.PermisoViewModel
+
+@{
+    ViewBag.Title = "Permisos";
+    ViewBag.pTitle = "Permisos";
+    ViewBag.pageTitle = "Configuración";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        @{await Html.RenderPartialAsync("_camposObligatorios");}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p>Si selecciona una <b>Ventana Padre</b>, no es requerido el campo <b>URL</b></p>
+                </div>
+                <form asp-action="Registrar" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" />
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="NombreAbreviado" class="control-label">Nombre <span class="text-danger">*</span></label>
+                                <input class="form-control" asp-for="NombreAbreviado" />
+                                <span asp-validation-for="NombreAbreviado" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Codigo" class="control-label">Código <span class="text-danger">*</span></label>
+                                <input class="form-control" asp-for="Codigo" />
+                                <span asp-validation-for="Codigo" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="Url" class="control-label">Url <span class="text-danger">*</span></label>
+                                <input class="form-control" asp-for="Url" />
+                                <span asp-validation-for="Url" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Icono" class="control-label">Icono </label>
+                                <input class="form-control" asp-for="Icono" placeholder="fa fa-edit" />
+                                <span><a target="_blank" href="https://fontawesome.com/v5.15/icons">Ver Iconos</a></span>
+                                <span asp-validation-for="Icono" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="Descripcion" class="control-label">Descripción <span class="text-danger">*</span></label>
+                                <input class="form-control" asp-for="Descripcion" />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="IdPadre" class="control-label">Ventana Padre</label>
+                                <select asp-for="IdPadre" class="select2 form-control" asp-items="ViewBag.VentanasPadre">
+                                    <option selected value="">--Ninguno--</option>
+                                </select>
+                                <span asp-validation-for="IdPadre" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2();
+        });
+    </script>
+    @Html.Raw(TempData["msg"])
+}

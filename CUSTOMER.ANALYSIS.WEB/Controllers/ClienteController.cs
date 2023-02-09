@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CUSTOMER.ANALYSIS.WEB.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Filters.MenuFilter(CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants.VentanasSoporte.Clientes)]
     public class ClienteController : Controller
     {
         private readonly IClienteRepository _clienteRepository;

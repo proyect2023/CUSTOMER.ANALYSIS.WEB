@@ -1,0 +1,116 @@
+﻿@model CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.UsuariosAppResultDto
+@{
+    ViewBag.Title = "Editar Usuarios";
+    ViewBag.pTitle = "Editar Usuarios";
+    ViewBag.pageTitle = "Edit";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        @{await Html.RenderPartialAsync("_camposObligatorios");}
+        <form asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdUsuario" />
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="control-label">Nombre <span class="text-danger">*</span></label>
+                        <input asp-for="Nombre" class="form-control input-texto" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Apellido" class="control-label">Apellido <span class="text-danger">*</span></label>
+                        <input asp-for="Apellido" class="form-control input-texto" />
+                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Cedula" class="control-label">Cédula <span class="text-danger">*</span></label>
+                        <input asp-for="Cedula" class="form-control input-number" autofocus maxlength="10" />
+                        <span asp-validation-for="Cedula" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Usuario" class="control-label">Username <span class="text-danger">*</span></label>
+                        <input asp-for="Usuario" class="form-control" autofocus />
+                        <span asp-validation-for="Usuario" class="text-danger"></span>
+                    </div>
+                </div>
+                
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="CorreoElectronico" class="control-label">Correo Electrónico <span class="text-danger">*</span></label>
+                        <input asp-for="CorreoElectronico" class="form-control" />
+                        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Telefono" class="control-label">Teléfono </label>
+                        <input asp-for="Telefono" class="form-control input-number" maxlength="10" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="IdRol">Cargo <span class="text-danger">*</span></label>
+                        <select asp-for="IdRol" class=" form-control" asp-items="ViewBag.rol" >
+                            <option value="" selected disabled>Elige un cargo...</option>
+                        </select>
+                        <span asp-validation-for="IdRol" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="FechaIncorporacion" class="control-label">Fecha Incorporación <span class="text-danger">*</span></label>
+                        <input asp-for="FechaIncorporacion" type="date" class="form-control" />
+                        <span asp-validation-for="FechaIncorporacion" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Direccion" class="control-label">Dirección <span class="text-danger">*</span></label>
+                        <input asp-for="Direccion" class="form-control" />
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+    @Html.Raw(TempData["msg"])
+}

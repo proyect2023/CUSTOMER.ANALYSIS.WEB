@@ -28,8 +28,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants
         public static string TipoAlmacenamiento { get; set; }
 
 
-        public static string FormatoReporte_RutaBase { get; set; }
-        public static string FormatoReporte_NombreArchivo { get; set; }
-        public static string FormatoReporte_Extension { get; set; }
+        //public static string FormatoReporte_RutaBase { get; set; }
+        //public static string FormatoReporte_NombreArchivo { get; set; }
+        //public static string FormatoReporte_Extension { get; set; }
     }
 }
