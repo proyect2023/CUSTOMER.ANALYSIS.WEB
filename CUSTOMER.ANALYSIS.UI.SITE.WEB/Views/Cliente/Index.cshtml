@@ -13,7 +13,7 @@
 <div class="card">
     <div class="card-body">
         <div>
-            <div id="floating-panel" class="accordion-item" style="width: 200px;">
+            <div id="floating-panel" class="accordion-item" style="width: 300px;">
                 <h2 class="accordion-header" id="flush-headingOne">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     <p class="h6">Opciones</p>
@@ -22,15 +22,17 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <div class="row form-group">
-                        <div class="col-md-12">
-                            <label for="chk-wep"><input type="checkbox" value="1" id="chk-wep"> Clientes Activos</label>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="chk-wps"> <input type="checkbox" value="1" id="chk-wps"> Clientes Antiguos</label>
+                            <div class="col-md-12">
+                                <label for="chk-clientes-inactivos"><input type="checkbox" value="1" id="chk-clientes-inactivos" onclick="onChangeInactivos()"> Clientes Inactivos</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="chk-clientes-antiguos"> <input type="checkbox" value="1" id="chk-clientes-antiguos" onclick="onChangeAntiguos()"> Clientes Antiguos</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="chk-clientes-con-ventas"> <input type="checkbox" value="1" id="chk-clientes-con-ventas" onclick="onChangeMasVendidos()"> Clientes con más ventas</label>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    
                 </div>
             </div>
         </div>
@@ -49,7 +51,7 @@
     <!-- Fin Google Maps -->
 
     <script>
-        urlClientes = '@Url.Action("Get", "Cliente")';
+        urlClientes = '@Url.Action("Index", "Cliente")';
         $(document).ready(function(){
             getClientes();
             $("#floating-panel").draggable();

@@ -2,6 +2,10 @@
 
 let map, heatmap;
 let urlClientes = "";
+let resultados = [];
+let masVendidos = false;
+let antiguos = false;
+let estadoClientePlan = 1;
 
 function initMap(initialData = []) {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -20,8 +24,9 @@ function initMap(initialData = []) {
 }
 
 function getClientes() {
-    $.get(urlClientes).done(function (response) {
+    $.get(urlClientes + '/Get', { masVendidos, antiguos, estadoClientePlan }).done(function (response) {
         //console.log(response);
+        /*resultados = response;*/
         initMap(getAllPoints(response));
     }).fail(function (error) {
         console.error(error);
@@ -30,10 +35,39 @@ function getClientes() {
 
 function getAllPoints(initialData = []) {
     var locs = [];
+    resultados = [];
     initialData.forEach(x => {
+        resultados.push({ latitud: x.latitud, longitud: x.longitud});
         locs.push(new google.maps.LatLng(x.latitud, x.longitud));
     });
-    //console.log(locs);
+    console.log('Cantidad de consultas', resultados.length);
     return locs;
+}
+
+function onChangeMasVendidos() {
+    if ($('#chk-clientes-con-ventas').prop('checked')) {
+        masVendidos = true;
+    } else {
+        masVendidos = false;
+    }
+    getClientes();
+}
+
+function onChangeAntiguos() {
+    if ($('#chk-clientes-antiguos').prop('checked')) {
+        antiguos = true;
+    } else {
+        antiguos = false;
+    }
+    getClientes();
+}
+
+function onChangeInactivos() {
+    if ($('#chk-clientes-inactivos').prop('checked')) {
+        estadoClientePlan = 2;
+    } else {
+        estadoClientePlan = 1;
+    }
+    getClientes();
 }
 

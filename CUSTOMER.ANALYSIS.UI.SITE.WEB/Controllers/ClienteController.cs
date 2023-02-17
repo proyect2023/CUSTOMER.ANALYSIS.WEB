@@ -1,4 +1,5 @@
-﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories;
+﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.QueryServices;
+using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
@@ -7,11 +8,11 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
     [Filters.MenuFilter(CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants.VentanasSoporte.Clientes)]
     public class ClienteController : Controller
     {
-        private readonly IClienteRepository _clienteRepository;
+        private readonly IAnalisisQueryService _analisisQueryService;
 
-        public ClienteController(IClienteRepository clienteRepository)
+        public ClienteController(IAnalisisQueryService analisisQueryService)
         {
-            this._clienteRepository = clienteRepository;
+            this._analisisQueryService = analisisQueryService;
         }
 
         public IActionResult Index()
@@ -20,11 +21,11 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0)
         {
-            var cliente = _clienteRepository.GetAll();
+            var result = _analisisQueryService.ConsultarTotales(masVendidos, antiguos, estadoClientePlan);
 
-            return Json(cliente);
+            return Json(result);
         }
     }
 }
