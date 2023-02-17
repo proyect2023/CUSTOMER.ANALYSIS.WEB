@@ -1,0 +1,142 @@
+﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.DomainServices.ParametroDto>
+@{
+    ViewBag.Title = "Parametros";
+    ViewBag.pTitle = "Parametros";
+    ViewBag.pageTitle = "Parametros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section Styles{
+    <link href="~/lib/summernote/summernote.min.css" rel="stylesheet" />
+}
+
+<div class="">
+    <div class="">
+        <div class="row">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var item = Model[i];
+                if (item.EsDecimal == false && item.EsEntero == false && item.EsTextoLargo == false)
+                {
+                    <div class="col-12 card">
+                        <div class="row card-body">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Código </label>
+                                <input id="Codigo_@i"  class="form-control" value="@item.Codigo" readonly />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"> Valor </label>
+                                <input id="Valor_@i" class="form-control" value="@item.Valor" />
+                            </div>
+                            <div class="col-md-4" >
+                                <label class="form-label"> Descripción </label>
+                                <input id="Descripcion_@i" class="form-control" value="@item.Descripcion" />
+                            </div>
+                            <div class="col-md-1 d-grid gap-2" style="align-self: end;">
+                                <button class="btn btn-success" onclick="onClickGuardarParametro('@i')">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                       
+                }
+                else if (item.EsEntero == true)
+                {
+                    <div class="col-12 card">
+                        <div class="row card-body">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Código: <span class="text-danger">*</span>  </label>
+                                <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"> Valor: <span class="text-danger">*</span>  </label>
+                                <input id="Valor_@i" class="form-control" type="number" value="@item.Valor" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label"> Descripción: </label>
+                                <input id="Descripcion_@i" class="form-control" value="@item.Descripcion" />
+                            </div>
+                            <div class="col-md-1 d-grid gap-2" style="align-self: end;">
+                                <button class="btn btn-success" onclick="onClickGuardarParametro('@i')">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (item.EsDecimal == true)
+                {
+                    <div class="col-12 card">
+                        <div class="row card-body">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Código: <span class="text-danger">*</span> </label>
+                                <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"> Valor: <span class="text-danger">*</span> </label>
+                                <input id="Valor_@i" class="form-control decimal" value="@item.Valor" />
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label"> Descripción: </label>
+                                <input id="Descripcion_@i" class="form-control" value="@item.Descripcion" />
+                            </div>
+                            <div class="col-md-1 d-grid gap-2" style="align-self: end;">
+                                <button class="btn btn-success" onclick="onClickGuardarParametro('@i')">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (item.EsTextoLargo == true)
+                {
+                    <div class="col-12 card">
+                        <div class="row card-body">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Código: <span class="text-danger">*</span> </label>
+                                <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
+                            </div>
+                            <div class="col-md-7">
+                                <label class="form-label"> Descripción: </label>
+                                <input id="Descripcion_@i" class="form-control" value="@item.Descripcion" />
+                            </div>
+                            <div class="col-md-1 d-grid gap-2" style="align-self: end;">
+                                <button class="btn btn-success" onclick="onClickGuardarParametro('@i')">Guardar</button>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"> Valor: <span class="text-danger">*</span> </label>
+                                <textarea asp-for="@Model[i].Valor" id="Valor_@i" class="form-control summernote" value="@item.Valor"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/plentz-jquery-maskmoney-cdbeeac/dist/jquery.maskMoney.min.js"></script>
+    <script src="~/lib/summernote/summernote.min.js"></script>
+    <a href="~/lib/summernote/summernote.js.map">~/lib/summernote/summernote.js.map</a>
+    <script>
+        $(document).ready(function(){
+            $(".decimal").maskMoney();
+            $('.summernote').summernote();
+        });
+
+        const onClickGuardarParametro = (id) => {
+            const param = {
+                Codigo: $("#Codigo_" + id).val(),
+                Valor: $("#Valor_" + id).val(),
+                Descripcion: $("#Descripcion_" + id).val(),
+            };
+
+            $.post('@Url.Action("Guardar", "Parametros")').done(function() {
+
+            }).fail(function(){
+
+            })
+
+            console.log(param);
+        }
+    </script>
+}

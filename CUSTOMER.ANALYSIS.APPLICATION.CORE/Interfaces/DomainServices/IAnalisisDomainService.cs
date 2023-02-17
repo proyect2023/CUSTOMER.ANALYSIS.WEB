@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.DomainServices
 {
     public interface IAnalisisDomainService
     {
+        MethodResponseDto ConsultarParametros();
     }
 }

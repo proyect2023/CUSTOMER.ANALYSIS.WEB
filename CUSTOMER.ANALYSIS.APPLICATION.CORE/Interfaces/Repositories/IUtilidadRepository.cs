@@ -6,6 +6,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
     public interface IUtilidadRepository
     {
         void InicializarDb();
+        List<Parametros> GetParametros();
         Parametros GetParametro(string Codigo);
         List<Rol> GetRolesPrincipales();
         bool AddRol(int Id, string Nombre);

@@ -53,6 +53,11 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
             return _context.SaveChanges() > 0;
         }
 
+        public List<Parametros> GetParametros()
+        {
+            return _context.Parametros.Where(x => x.Estado == true).ToList();
+        }
+
         public Parametros GetParametro(string Codigo)
         {
             return _context.Parametros.FirstOrDefault(x => x.Codigo == Codigo && x.Estado);
