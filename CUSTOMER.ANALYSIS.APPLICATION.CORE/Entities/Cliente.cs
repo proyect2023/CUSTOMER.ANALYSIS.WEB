@@ -12,5 +12,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities
         public decimal? Latitud { get; set; }
         public decimal? Longitud { get; set; }
         public bool? Estado { get; set; }
+        public virtual ICollection<ClientePlan> ClientePlans { get; } = new List<ClientePlan>();
+
     }
 }

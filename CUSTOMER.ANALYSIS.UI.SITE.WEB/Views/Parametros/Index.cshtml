@@ -21,6 +21,9 @@
                 {
                     <div class="col-12 card">
                         <div class="row card-body">
+                            <input id="EsEntero_@i" type="hidden" value="False" />
+                            <input id="EsDecimal_@i" type="hidden" value="False" />
+                            <input id="EsTextoLargo_@i" type="hidden" value="False" />
                             <div class="col-md-4 ">
                                 <label class="form-label"> Código </label>
                                 <input id="Codigo_@i"  class="form-control" value="@item.Codigo" readonly />
@@ -44,6 +47,9 @@
                 {
                     <div class="col-12 card">
                         <div class="row card-body">
+                            <input id="EsEntero_@i" type="hidden" value="True" />
+                            <input id="EsDecimal_@i" type="hidden" value="False" />
+                            <input id="EsTextoLargo_@i" type="hidden" value="False" />
                             <div class="col-md-4 ">
                                 <label class="form-label"> Código: <span class="text-danger">*</span>  </label>
                                 <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
@@ -66,6 +72,9 @@
                 {
                     <div class="col-12 card">
                         <div class="row card-body">
+                            <input id="EsEntero_@i" type="hidden" value="False" />
+                            <input id="EsDecimal_@i" type="hidden" value="True" />
+                            <input id="EsTextoLargo_@i" type="hidden" value="False" />
                             <div class="col-md-4 ">
                                 <label class="form-label"> Código: <span class="text-danger">*</span> </label>
                                 <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
@@ -88,6 +97,9 @@
                 {
                     <div class="col-12 card">
                         <div class="row card-body">
+                            <input id="EsEntero_@i" type="hidden" value="False" />
+                            <input id="EsDecimal_@i" type="hidden" value="False" />
+                            <input id="EsTextoLargo_@i" type="hidden" value="True" />
                             <div class="col-md-4 ">
                                 <label class="form-label"> Código: <span class="text-danger">*</span> </label>
                                 <input id="Codigo_@i" class="form-control" value="@item.Codigo" readonly />
@@ -116,27 +128,16 @@
 @section Scripts {
     <script src="~/lib/plentz-jquery-maskmoney-cdbeeac/dist/jquery.maskMoney.min.js"></script>
     <script src="~/lib/summernote/summernote.min.js"></script>
-    <a href="~/lib/summernote/summernote.js.map">~/lib/summernote/summernote.js.map</a>
+
+    <script src="~/js/parametros.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
     <script>
+
+        urlParametros = '@Url.Action("Index", "Parametros")';
         $(document).ready(function(){
             $(".decimal").maskMoney();
             $('.summernote').summernote();
         });
 
-        const onClickGuardarParametro = (id) => {
-            const param = {
-                Codigo: $("#Codigo_" + id).val(),
-                Valor: $("#Valor_" + id).val(),
-                Descripcion: $("#Descripcion_" + id).val(),
-            };
-
-            $.post('@Url.Action("Guardar", "Parametros")').done(function() {
-
-            }).fail(function(){
-
-            })
-
-            console.log(param);
-        }
+        
     </script>
 }

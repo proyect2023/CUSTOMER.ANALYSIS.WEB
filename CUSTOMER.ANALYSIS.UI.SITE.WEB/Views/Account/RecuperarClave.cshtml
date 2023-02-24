@@ -9,47 +9,39 @@
 <div class="account-pages login landingImg">
     <div class="container">
         <div class="row justify-content-center mainContent">
-            <div class="col-md-6 col-lg-6 col-xl-6 logoLogin">
-                <div class="mainLogo">
-                    @*<img src="~/assets/images/logoSAIN.png" alt="Alternate Text" />*@
-                </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 logoLogin" style="place-items: center;">
+                <img src="~/assets/images/logo-lg.jpeg" alt="Alternate Text" />
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6 contentRight">
                 <div class="titleLogin">
                     <p>Recuperar Contraseña</p>
                 </div>
                 <form asp-action="RecuperarClave" method="post" autocomplete="off">
-                    <div class="p-2">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group has-feedback">
-                            <label>
-                                Ingrese el usuario
-                            </label>
-                            <div ID="UpdatePanel4">
-                                <input type="text" asp-for="Usuario" Class="form-control" placeholder="Usuario" required>
-                                <span asp-validation-for="Usuario" class="text-danger"></span>
-                            </div>
-                            <span class="glyphicon glyphicon-lock form-control-feedback" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group has-feedback">
+                        <label for="Usuario" class="form-label">Usuario</label>
+                        <div ID="UpdatePanel4">
+                            <input type="text" asp-for="Usuario" Class="form-control" placeholder="Usuario" required>
+                            <span asp-validation-for="Usuario" class="text-danger"></span>
                         </div>
-                        <br />
-                        <div class="form-group has-feedback">
-                            <label>
-                                Ingrese su correo
-                            </label>
-                            <div ID="UpdatePanel4">
-                                <input type="email" asp-for="CorreoElectronico" Class="form-control" placeholder="Correo Electronico" required>
-                                <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
-                            </div>
-                            <span class="glyphicon glyphicon-lock form-control-feedback" />
+                        <span class="glyphicon glyphicon-lock form-control-feedback" />
+                    </div>
+                    <br />
+                    <div class="form-group has-feedback">
+                        <label for="Usuario" class="form-label">Correo Electrónico</label>
+                        <div ID="UpdatePanel4">
+                            <input type="email" asp-for="CorreoElectronico" Class="form-control" placeholder="Correo Electronico" required>
+                            <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                         </div>
-                        <br />
-                        <div class='form-group text-center'>
-                            <div class="row">
-                                <div class="form-group text-center">
-                                    <button Id="BtnConfirmar" type="submit" class="btn btn-info btn-block btn-login">Enviar</button>
-                                </div>
-                            </div>
-                        </div>
+                        <span class="glyphicon glyphicon-lock form-control-feedback" />
+                    </div>
+                    
+                    <div class="mt-3 d-grid">
+                        <button Id="BtnConfirmar" type="submit" class="btn btn-info btn-block btn-login">Enviar</button>
+                    </div>
+
+                    <div class="form-group">
+                        <a asp-action="Login" class="btn btn-link btn-rounded waves-effect">Iniciar sesión</a>
                     </div>
                 </form>
             </div>

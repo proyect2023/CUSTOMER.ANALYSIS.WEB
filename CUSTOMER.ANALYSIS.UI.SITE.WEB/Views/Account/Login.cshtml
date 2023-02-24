@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6 contentRight">
                 <div class="titleLogin">
-                    <p>INTERCOM</p>
+                    <p>INICIAR SESIÓN</p>
                 </div>
                 <form class="form-horizontal" id="formLogin" method="post" asp-action="Login" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]" autocomplete="off">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -76,12 +76,9 @@
                                 </div>
                             }
                         }
-                        if (!WebSiteParameters.WebDirActivo)
-                        {
-                            <div class="form-group">
-                                <a id="btnRecuperarClave" OnClick="Recuperar()" class="btn btn-link btn-rounded waves-effect">¿Olvidaste tu contraseña?</a>
-                            </div>
-                        }
+                        <div class="form-group">
+                            <a id="btnRecuperarClave" OnClick="Recuperar()" class="btn btn-link btn-rounded waves-effect">¿Olvidaste tu contraseña?</a>
+                        </div>
                     }
                 </form>
             </div>

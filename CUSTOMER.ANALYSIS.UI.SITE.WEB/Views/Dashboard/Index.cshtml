@@ -1,7 +1,153 @@
-﻿@{
+﻿@model CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices.DashboardDto
+
+@{
     ViewBag.Title = "Dashboard";
     ViewBag.pTitle = "Dashboard";
     ViewBag.pageTitle = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
+<div class="row">
+
+    <div class="col-xl-12">
+        <div class="row">
+
+            @foreach (var item in Model.Planes.OrderBy(x => x.Velocidad))
+            {
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <a href='#' class="d-flex">
+                                <div class="flex-grow-1">
+                                    <h4 class="text-muted fw-medium">Plan @item.Nombre</h4>
+                                    @*<p class="text-muted fw-medium"></p>*@
+                                    <p class="text-muted fw-medium">
+                                        <b>Velocidad:</b> @item.Velocidad Mbps
+                                        <br>
+                                        <b>Total Clientes:</b> @item.ClientePlans.Count
+                                        <br>
+                                        <b>Total Ventas:</b> $ @CUSTOMER.ANALYSIS.APPLICATION.CORE.Utilities.Utilidades.DoubleToString_FrontCO(@item.ClientePlans.Sum(x => x.PagoMensual), 2)
+                                    </p>
+                                </div>
+
+                                <div class="flex-shrink-0 align-self-center">
+                                    <div class="mini-stat-icon avatar-sm rounded-circle bg-primary" >
+                                        <span class="avatar-title">
+                                            <i class="bx bx-wifi font-size-24"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            
+        </div>
+    </div>
+    
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body" id="graphLineas">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <h4 class="card-title mb-4">Ventas anuales</h4>
+                    </div>
+                    <div class="col-md-4 offset-md-4">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Año: <span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <select id="selAnios" class="form-control" onchange="CargarGraficos()">
+                                    @for (int i = 0; i < Model.Anios.Length; i++)
+                                    {
+                                        var item = Model.Anios[i];
+                                        if (i == (Model.Anios.Length - 0))
+                                        {
+                                            <option selected value="@item">@item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div id="line_chart_datalabel" class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body" >
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <h4 class="card-title mb-4">Ganancia Planes anuales</h4>
+                    </div>
+                    <div class="col-md-4 offset-md-4">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Año: <span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <select id="selAniosPlanes" class="form-control" onchange="CargarGraficoPlanes()">
+                                    @for (int i = 0; i < Model.Anios.Length; i++)
+                                    {
+                                        var item = Model.Anios[i];
+                                        if (i == (Model.Anios.Length - 0))
+                                        {
+                                            <option selected value="@item">@item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="float-sm-right">
+                    <ul class="nav nav-pills">
+                        @*<li class="nav-item">
+                        <a class="nav-link" href="#">Week</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Month</a>
+                        </li>*@
+                        @*<li class="nav-item">
+                        <a class="nav-link active" href="#">Año</a>
+                        <p>Año</p>
+                        </li>*@
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div id="stacked-column-chart" class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <!-- apexcharts -->
+    <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/dashboard.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
+    <script>
+        urlGraficoVentas = '@Url.Action("GetGraficos", "Dashboard")';
+        urlGraficoPlanes = '@Url.Action("GetGraficosPlanes", "Dashboard")';
+        $(document).ready(function () {
+            CargarGraficos();
+            CargarGraficoPlanes();
+        });
+
+    </script>
 }

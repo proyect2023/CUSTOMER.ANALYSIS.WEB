@@ -7,7 +7,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
     {
         void InicializarDb();
         List<Parametros> GetParametros();
-        Parametros GetParametro(string Codigo);
+        Parametros? GetParametro(string Codigo);
+        int ActualizarParametro(Parametros parametro);
         List<Rol> GetRolesPrincipales();
         bool AddRol(int Id, string Nombre);
         void AgregarUsuarioAdministrador();

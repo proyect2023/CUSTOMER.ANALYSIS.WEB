@@ -142,7 +142,6 @@ function ConfirmacionEliminar(urlAction, urlRedirect, data) {
     });
 }
 
-
 function ConfirmacionEditar(urlAction, urlRedirect, data) {
     Swal.fire({
         title: 'Editar registro',

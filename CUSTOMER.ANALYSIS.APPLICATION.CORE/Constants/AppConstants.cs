@@ -51,57 +51,12 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants
         Natural = 2
     }
 
-    public enum Genero
+    public enum EstadoPlan
     {
-        [Display(Name = "Macho")]
-        Macho = 1,
-
-        [Display(Name = "Hembra")]
-        Hembra = 2
-    }
-
-    public enum EstadoControl
-    {
-        Inactivo = 0,
-        [Display(Name = "Activo")]
-        Activo = 1
-    }
-    
-    public enum EstadoActividadManejo
-    {
-        Inactivo = 0,
-        [Display(Name = "Activo")]
+        Eliminado = 0,
         Activo = 1,
-        Terminado = 2
+        Inactivo,
+        Cambiado
     }
 
-    public enum EstadoCria
-    {
-        Inactivo = 0,
-        Activo = 1,
-        Vencido,
-        Procesado,
-        PorProcesar
-    }
-    
-    public enum EstadoProduccion
-    {
-        Inactivo = 0,
-        Activa = 1,
-        Vendida = 2,
-        Parcial = 3
-    }
-
-    public enum EstadoPeso
-    {
-        Inactivo = 0,
-        Activa = 1,
-        Historico = 2
-    }
-
-    //public enum EstadoSeleccionDescarte
-    //{
-    //    Seleccion = 1,
-    //    Descartes = 2
-    //}
 }

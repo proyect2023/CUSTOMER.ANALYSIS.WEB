@@ -17,6 +17,7 @@ using CUSTOMER.ANALYSIS.INFRA.QUERY.QueryServices;
 using CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.Services;
 using CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE.Services;
 using CUSTOMER.ANALYSIS.REPOSITORY.QueryServices;
+using CUSTOMER.ANALYSIS.REPOSITORY.Repositories;
 using CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters;
 using CUSTOMER.ANALYSIS.UI.WEB.SITE.Settings;
 using CUSTOMER.ANALYSIS.WEB;
@@ -45,6 +46,8 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
             services.AddScoped<IPortalQueryService, PortalQueryService>();
             services.AddScoped<IRolQueryService, RolQueryService>();
             services.AddScoped<IAnalisisQueryService, AnalisisQueryService>();
+            services.AddScoped<IPlanRepository, PlanRepository>();
+            
             //services.AddScoped<IUsuarioQueryService, UsuarioQueryService>();
         }
 
@@ -60,7 +63,7 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
             services.AddScoped<IPermisoAppService, PermisoAppService>();
             services.AddScoped<IInitialData, InitialData>();
             services.AddScoped<IAnalisisDomainService, AnalisisDomainService>();
-
+            services.AddScoped<IDashboardAppService, DashboardAppService>();
 
         }
 
