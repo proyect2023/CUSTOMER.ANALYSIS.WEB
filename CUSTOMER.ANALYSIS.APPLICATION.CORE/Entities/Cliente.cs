@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities
@@ -12,6 +14,18 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities
         public decimal? Latitud { get; set; }
         public decimal? Longitud { get; set; }
         public bool? Estado { get; set; }
+        public TipoPersona? TipoPersona { get; set; }
+        public string? TipoIdentificacion { get; set; }
+        public string? Direccion { get; set; }
+        public string? CorreoElectronico { get; set; }
+        public string? Telefono { get; set; }
+        public string? Ip { get; set; }
+        public long? UsuarioCreacion { get; set; }
+        public DateTime? FechaCreacion { get; set; }
+        public long? UsuarioModificacion { get; set; }
+        public DateTime? FechaModificacion { get; set; }
+        public long? UsuarioEliminacion { get; set; }
+        public DateTime? FechaEliminacion { get; set; }
         public virtual ICollection<ClientePlan> ClientePlans { get; } = new List<ClientePlan>();
 
     }

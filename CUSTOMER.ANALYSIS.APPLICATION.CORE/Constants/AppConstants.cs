@@ -59,4 +59,5 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants
         Cambiado
     }
 
+
 }

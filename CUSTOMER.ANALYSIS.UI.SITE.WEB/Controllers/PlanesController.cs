@@ -4,7 +4,6 @@ using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.AppServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.QueryServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Models;
-using CUSTOMER.ANALYSIS.APPLICATION.CORE.Utilities;
 using CUSTOMER.ANALYSIS.CROSSCUTTING.Interfaces;
 using CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants;
 using GS.TOOLS;
@@ -14,32 +13,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
 {
-    [Microsoft.AspNetCore.Authorization.Authorize]
-    [Filters.MenuFilter(CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants.VentanasSoporte.Clientes)]
-    public class ClienteController : BaseController
+    public class PlanesController : BaseController
     {
-        private readonly IAnalisisQueryService _analisisQueryService;
+        private readonly IPlanAppService _planAppService;
         private readonly IUtilidadRepository _utilidadRepository;
-        private readonly IClienteAppService _clienteAppService;
 
-        public ClienteController(
-            IAnalisisQueryService analisisQueryService,
+        public PlanesController(
+            IPlanAppService planAppService,
             IUtilidadRepository utilidadRepository,
             ILogInfraServices logInfraServices,
-            IClienteAppService clienteAppService) 
+            IClienteAppService clienteAppService)
         {
-            this._analisisQueryService = analisisQueryService;
+            _planAppService = planAppService;
             _utilidadRepository = utilidadRepository;
-            _clienteAppService = clienteAppService;
         }
 
         public IActionResult Index()
         {
-            List<ClienteModel> clientes = new List<ClienteModel>();
+            List<PlanViewModel> clientes = new List<PlanViewModel>();
             try
             {
-                ViewData["tipoIdentificacion"] = _utilidadRepository.GetTipoIdentificaciones();
-                var result = _clienteAppService.ConsultarClientes();
+                
+                var result = _planAppService.ConsultarPlanes();
                 if (result.TieneErrores) throw new Exception(result.MensajeError);
                 if (result.Estado)
                 {
@@ -64,14 +59,13 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
         {
             ViewBag.EsNuevo = string.IsNullOrEmpty(Id);
 
-            ClienteModel model = new ClienteModel();
+            PlanViewModel model = new PlanViewModel();
             try
             {
-                ViewData["tipoIdentificacion"] = new SelectList(_utilidadRepository.GetTipoIdentificaciones().ToList(), "Codigo", "Nombre");
-
+                ViewData["tipoPlan"] = new SelectList(_utilidadRepository.GetTiposPlan().ToList(), "IdTipoPlan", "Nombre");
                 if (!string.IsNullOrEmpty(Id))
                 {
-                    var result = _clienteAppService.ConsultarCliente(Id);
+                    var result = _planAppService.ConsultarPlan(Id);
                     if (result.TieneErrores) throw new Exception(result.MensajeError);
                     if (result.Estado)
                     {
@@ -86,7 +80,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             }
             catch (System.Exception ex)
             {
-                model = new ClienteModel();
+                model = new PlanViewModel();
                 ModelState.AddModelError(string.Empty, DomainConstants.ObtenerDescripcionError(DomainConstants.ERROR_GENERAL) + RegistrarLogError(this.GetCaller(), ex));
             }
             finally
@@ -99,19 +93,12 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrar(ClienteModel model)
+        public IActionResult Registrar(PlanViewModel model)
         {
             ViewBag.EsNuevo = string.IsNullOrEmpty(model.Id);
             try
             {
-                ViewData["tipoIdentificacion"] = new SelectList(_utilidadRepository.GetTipoIdentificaciones(), "Codigo", "Nombre");
-
-                if (Identification.ValidateAllTypeIdentification(model.Identificacion) != model.TipoIdentificacion)
-                {
-                    ModelState.AddModelError("Identificacion", "La identificación ingresada no corresponde al tipo de identificación seleccionado");
-                    return View(model);
-                }
-
+                ViewData["tipoPlan"] = new SelectList(_utilidadRepository.GetTiposPlan().ToList(), "IdTipoPlan", "Nombre");
                 if (ModelState.IsValid)
                 {
                     var usr = GetUserLogin();
@@ -120,7 +107,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
 
                     if (string.IsNullOrEmpty(model.Id))
                     {
-                        var result = _clienteAppService.CrearCliente(model);
+                        var result = _planAppService.CrearPlan(model);
                         if (result.TieneErrores) throw new Exception(result.MensajeError);
                         if (result.Estado)
                         {
@@ -135,7 +122,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
                     }
                     else
                     {
-                        var result = _clienteAppService.EditarCliente(model);
+                        var result = _planAppService.EditarPlan(model);
                         if (result.TieneErrores) throw new Exception(result.MensajeError);
                         if (result.Estado)
                         {
@@ -164,7 +151,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             try
             {
                 var usr = GetUserLogin();
-                var result = _clienteAppService.EliminarCliente(Id, usr.IPLogin, usr.IdUsuario);
+                var result = _planAppService.EliminarPlan(Id, usr.IPLogin, usr.IdUsuario);
                 if (result.TieneErrores) throw new Exception(result.MensajeError);
                 if (result.Estado)
                 {
@@ -182,18 +169,5 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Mapa()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public JsonResult Get(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0)
-        {
-            var result = _analisisQueryService.ConsultarTotales(masVendidos, antiguos, estadoClientePlan);
-
-            return Json(result);
-        }
     }
 }

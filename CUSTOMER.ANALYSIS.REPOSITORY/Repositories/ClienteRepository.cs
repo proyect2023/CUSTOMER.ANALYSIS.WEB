@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
 {
-    public class ClienteRepository : IClienteRepository
+    public class ClienteRepository : Repository<Cliente>, IClienteRepository
     {
         private readonly EFContext _context;
 
-        public ClienteRepository(EFContext context)
+        public ClienteRepository(EFContext context) : base(context)
         {
             this._context = context;
         }
 
-        public List<Cliente>? GetAll() 
+        public List<Cliente>? GetClientes() 
         {
             return _context.Cliente?.Where(x => x.Estado == true)?.ToList();
         }

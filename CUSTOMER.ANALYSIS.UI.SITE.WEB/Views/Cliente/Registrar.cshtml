@@ -1,0 +1,112 @@
+﻿@model CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.ClienteModel
+
+@{
+    ViewBag.Title = "Clientes";
+    ViewBag.pTitle = "Clientes";
+    ViewBag.pageTitle = "Configuración";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        @{await Html.RenderPartialAsync("_camposObligatorios");}
+        <form asp-action="Registrar" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="TipoPersona" class="control-label">Tipo de Persona <span class="text-danger">*</span></label>
+                        <select asp-for="TipoPersona" class=" form-control" asp-items="@Html.GetEnumSelectList<CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants.TipoPersona>()">
+                            <option value="" selected disabled>--Seleccionar--</option>
+                        </select>
+                        <span asp-validation-for="TipoPersona" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="TipoIdentificacion" class="control-label">Identificación <span class="text-danger">*</span></label>
+                        <select asp-for="TipoIdentificacion" class=" form-control" asp-items="ViewBag.tipoIdentificacion">
+                            <option value="" selected disabled>--Seleccionar--</option>
+                        </select>
+                        <span asp-validation-for="TipoIdentificacion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="Identificacion" class="control-label">Núm. Identificación <span class="text-danger">*</span></label>
+                        <input asp-for="Identificacion" class="form-control" />
+                        <span asp-validation-for="Identificacion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label id="label-RazonSocial" asp-for="RazonSocial" class="control-label">Nombres completos <span class="text-danger">*</span></label>
+                        <input asp-for="RazonSocial" class="form-control input-texto" />
+                        <span asp-validation-for="RazonSocial" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+             <br />
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="CorreoElectronico" class="control-label">Correo Electrónico  <span class="text-danger">*</span></label>
+                        <input asp-for="CorreoElectronico" class="form-control"  />
+                        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Telefono" class="control-label">Teléfono  <span class="text-danger">*</span></label>
+                        <input asp-for="Telefono" class="form-control input-number" maxlength="10" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Direccion">Dirección </label>
+                        <input asp-for="Direccion" class="form-control"  />
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                @if (ViewBag.EsNuevo)
+                {
+                    <button class="btn btn-success"  type="submit">Agregar</button>
+                }
+                else
+                {
+                    <button class="btn btn-success"  type="submit">Editar</button>
+                }
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/person.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
+    <script>
+        $(document).ready(function () {
+            
+        });
+
+    </script>
+    @Html.Raw(TempData["msg"])
+}

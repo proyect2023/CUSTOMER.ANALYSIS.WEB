@@ -21,7 +21,9 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Repositories
 
         public List<Plan> GetPlanes()
         {
-            return _context.Plans.Where(x => x.Estado == true).ToList();
+            return _context.Plans
+                .Include(x => x.IdTipoPlanNavigation)
+                .Where(x => x.Estado == true).ToList();
         }
 
         public int[]? GetAniosClientePlan()
@@ -35,22 +37,50 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Repositories
             return result?.OrderByDescending(x => x).Select(x => x).ToArray();
         }
         
-        public List<Plan> GetPlanesClientes()
+        public List<Plan> GetPlanesClientes(bool EstadoCliente = false)
         {
             return _context.Plans
                 .Include(x => x.ClientePlans)
-                .Include(x => x.ClientePlans).ThenInclude(x => x.IdClienteNavigation)
-                .Where(x => x.Estado == true).ToList();
+                .Include(x => x.ClientePlans.Where(x => (!EstadoCliente || (x.IdClienteNavigation.Estado ?? false) ))).ThenInclude(x => x.IdClienteNavigation)
+                .Where(x =>  x.Estado == true).ToList();
         }
 
-        public List<ClientePlan> GetClientePlan(int anio)
+        public List<ClientePlan> GetClientePlan(int anio, bool EstadoCliente = false)
         {
             return _context.ClientePlans
                 .Include(x => x.IdPlanNavigation)
                 .Include(x => x.IdClienteNavigation)
-                .Where(x => (x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Activo || x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Cambiado) && x.FechaContratacion.Value.Year == anio).ToList();
+                .Where(x => 
+                    (
+                        x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Activo || 
+                        x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Cambiado
+                    ) 
+                    && x.FechaContratacion.Value.Year == anio
+                    && (!EstadoCliente || (x.IdClienteNavigation.Estado ?? false))
+                ).ToList();
         }
 
+        public Plan? Get(int Id)
+        {
+            return _context.Plans.FirstOrDefault(x => x.IdPlan == Id);
+        }
+
+        public Plan? Get(string Id)
+        {
+            return _context.Plans.FirstOrDefault(x => x.Nombre == Id);
+        }
+
+        public int AddPlan(Plan plan)
+        {
+            _context.Plans.Add(plan);
+            return _context.SaveChanges();
+        }
+        
+        public int UpdatePlan(Plan plan)
+        {
+            _context.Plans.Update(plan);
+            return _context.SaveChanges();
+        }
 
     }
 }

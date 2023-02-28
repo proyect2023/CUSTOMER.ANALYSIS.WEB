@@ -1,8 +1,8 @@
-﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.ClienteModel>
+﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.PlanViewModel>
 
 @{
-    ViewBag.Title = "Clientes";
-    ViewBag.pTitle = "Clientes";
+    ViewBag.Title = "Planes";
+    ViewBag.pTitle = "Planes";
     ViewBag.pageTitle = "Mantenimiento";
 
 }
@@ -11,15 +11,14 @@
     <div class="card-body">
         <a asp-action="Registrar" class="btn btn-success">Nuevo</a>
         <a asp-action="Mapa" class="btn btn-success">Ver Mapa</a>
-        <table class="datatable table dt-responsive table-hover table-sm table-bordered">
+        <table class="datatable table dt-responsive table-hover table-sm table-bordered text-center">
             <thead>
                 <tr>
                     <th>Acción</th>
-                    <th>Nombres</th>
-                    <th>Tipo Identificación</th>
-                    <th>Identificación</th>
-                    <th>Teléfono</th>
-                    <th>Correo Electrónico</th>
+                    <th>Tipo Plan</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Velocidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,14 +31,12 @@
                         <td class="text-center">
                             <a asp-action="Registrar" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-edit"></i></a>
                             <button type="button" class="btn btn-danger btn-eliminar" value="@item.Id"><i class="fa fa-trash"></i></button>
-                            @*<a asp-action="Productos" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i></a>*@
 
                         </td>
-                        <td>@item.RazonSocial</td>
-                        <td>@(TipoDocumento?.FirstOrDefault(x => x.Codigo == item.TipoIdentificacion)?.Nombre ?? "Tipo no reconocido")</td>
-                        <td>@item.Identificacion</td>
-                        <td>@item.Telefono</td>
-                        <td>@item.CorreoElectronico</td>
+                        <td>@item.TipoPlan</td>
+                        <td>@item.Nombre</td>
+                        <td>$ @item.Precio</td>
+                        <td>@item.Velocidad Mbps</td>
                     </tr>
                 }
             </tbody>
@@ -70,7 +67,7 @@
             $(".btn-eliminar").click(function () {
                 var id = $(this).val();
                 console.log(id)
-                ConfirmacionEliminar("@Url.Action("Eliminar", "Clientes")", '@Url.Action("Index", "Clientes")', { Id: id } );
+                ConfirmacionEliminar("@Url.Action("Eliminar", "Planes")", '@Url.Action("Index", "Planes")', { Id: id });
             });
         });
     </script>

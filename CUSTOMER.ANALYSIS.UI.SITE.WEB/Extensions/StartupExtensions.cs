@@ -64,6 +64,8 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
             services.AddScoped<IInitialData, InitialData>();
             services.AddScoped<IAnalisisDomainService, AnalisisDomainService>();
             services.AddScoped<IDashboardAppService, DashboardAppService>();
+            services.AddScoped<IClienteAppService, ClienteAppService>();
+            services.AddScoped<IPlanAppService, PlanAppService>();
 
         }
 

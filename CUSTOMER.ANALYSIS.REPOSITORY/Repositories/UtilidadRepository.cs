@@ -137,5 +137,17 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
             }
         }
 
+
+        public List<TipoIdentificacion> GetTipoIdentificaciones()
+        {
+            return _context.TipoIdentificacion.Where(x => x.Estado).ToList();
+        }
+        
+        public List<TipoPlan> GetTiposPlan()
+        {
+            return _context.TipoPlans.Where(x => x.Estado == true).ToList();
+        }
+
+
     }
 }

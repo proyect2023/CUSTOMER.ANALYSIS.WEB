@@ -5,8 +5,8 @@ using System.Text;
 
 namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
 {
-    public interface IClienteRepository 
+    public interface IClienteRepository : IRepository<Cliente>
     {
-        List<Cliente> GetAll();
+        List<Cliente> GetClientes();
     }
 }

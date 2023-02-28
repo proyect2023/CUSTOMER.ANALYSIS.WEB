@@ -30,7 +30,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             {
                 DashboardDto dashboardDto = new()
                 {
-                    Planes = _planRepository.GetPlanesClientes(),
+                    Planes = _planRepository.GetPlanesClientes(true),
                     Anios = _planRepository.GetAniosClientePlan() ?? new int[] {}
                 };
 
@@ -51,7 +51,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             MethodResponseDto responseDto = new MethodResponseDto();
             try
             {
-                var ventas = _planRepository.GetClientePlan(anio);
+                var ventas = _planRepository.GetClientePlan(anio, true);
 
                 List<GraficoMes> grupoFacturasPorMesVentas = ventas
                     .GroupBy(x => new
@@ -124,7 +124,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             MethodResponseDto responseDto = new MethodResponseDto();
             try
             {
-                var planes = _planRepository.GetClientePlan(anio);
+                var planes = _planRepository.GetClientePlan(anio, true);
 
                 List<GraficoPlan> grupoFacturasPorMesVentas = planes
                     .GroupBy(x => new

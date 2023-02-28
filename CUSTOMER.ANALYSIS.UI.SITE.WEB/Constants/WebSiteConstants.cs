@@ -29,6 +29,7 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants
         Permisos                    = 102, 
         Rol                         = 103,
 
-        Clientes = 200,
+        Clientes = 201,
+        Planes = 202,
     }
 }

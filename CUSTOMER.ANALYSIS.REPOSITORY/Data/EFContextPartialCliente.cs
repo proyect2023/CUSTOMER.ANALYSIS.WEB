@@ -14,7 +14,7 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Data
         public virtual DbSet<ClientePlan> ClientePlans { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<TipoPlan> TipoPlans { get; set; }
-
+        public virtual DbSet<TipoIdentificacion> TipoIdentificacion { get; set; }
         partial void OnModelCreatingPartialCliente(ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<Cliente>(entity =>

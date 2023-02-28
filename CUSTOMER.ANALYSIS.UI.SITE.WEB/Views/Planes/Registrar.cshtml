@@ -1,0 +1,93 @@
+﻿@model CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.PlanViewModel
+
+@{
+    ViewBag.Title = "Planes";
+    ViewBag.pTitle = "Planes";
+    ViewBag.pageTitle = "Mantenimiento";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        @{await Html.RenderPartialAsync("_camposObligatorios");}
+        <form asp-action="Registrar" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="IdTipoPlan" class="control-label">Tipo Plan <span class="text-danger">*</span></label>
+                        <select asp-for="IdTipoPlan" class=" form-control" asp-items="ViewBag.tipoPlan">
+                            <option value="" selected disabled>--Seleccionar--</option>
+                        </select>
+                        <span asp-validation-for="IdTipoPlan" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="control-label">Nombre <span class="text-danger">*</span></label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label id="label-Precio" asp-for="Precio" class="control-label">Precio <span class="text-danger">*</span></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input asp-for="Precio" class="form-control decimal" />
+                        </div>
+                        <span asp-validation-for="Precio" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label id="label-Velocidad" asp-for="Velocidad" class="control-label">Velocidad <span class="text-danger">*</span></label>
+                        <div class="input-group mb-3">
+                            <input type="number" asp-for="Velocidad" class="form-control" />
+                            <span class="input-group-text" id="basic-addon2">Mbps</span>
+                        </div>
+                        <span asp-validation-for="Velocidad" class="text-danger"></span>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                @if (ViewBag.EsNuevo)
+                {
+                    <button class="btn btn-success"  type="submit">Agregar</button>
+                }
+                else
+                {
+                    <button class="btn btn-success"  type="submit">Editar</button>
+                }
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/plentz-jquery-maskmoney-cdbeeac/dist/jquery.maskMoney.min.js"></script>
+    <script src="~/js/person.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
+    <script>
+        $(document).ready(function () {
+            $(".decimal").maskMoney();
+        });
+
+    </script>
+    @Html.Raw(TempData["msg"])
+}

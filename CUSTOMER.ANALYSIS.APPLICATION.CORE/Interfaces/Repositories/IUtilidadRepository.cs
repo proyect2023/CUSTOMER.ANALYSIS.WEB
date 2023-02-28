@@ -12,6 +12,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
         List<Rol> GetRolesPrincipales();
         bool AddRol(int Id, string Nombre);
         void AgregarUsuarioAdministrador();
+        List<TipoIdentificacion> GetTipoIdentificaciones();
+        List<TipoPlan> GetTiposPlan();
     }
 }
     

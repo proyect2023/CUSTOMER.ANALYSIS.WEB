@@ -39,5 +39,16 @@
 			<HintPath>..\Libraries\GS.TOOLS.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Views\Planes\Index.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="Views\Planes\Registrar.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
 	
 </Project>

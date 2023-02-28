@@ -10,8 +10,12 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
     public interface IPlanRepository
     {
         List<Plan> GetPlanes();
-        List<Plan> GetPlanesClientes();
+        Plan? Get(int Id);
+        Plan? Get(string Id);
+        int AddPlan(Plan plan);
+        int UpdatePlan(Plan plan);
+        List<Plan> GetPlanesClientes(bool EstadoCliente = false);
         int[]? GetAniosClientePlan();
-        List<ClientePlan> GetClientePlan(int anio);
+        List<ClientePlan> GetClientePlan(int anio, bool EstadoCliente = false);
     }
 }
