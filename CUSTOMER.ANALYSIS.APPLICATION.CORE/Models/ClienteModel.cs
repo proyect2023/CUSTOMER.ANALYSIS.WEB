@@ -39,6 +39,17 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Models
         [MinLength(length: 10, ErrorMessage = DomainConstants.MENSAJE_CAMPO_MIN_LENGTH + " [10]")]
         public string? Telefono { get; set; }
 
+        [Required(ErrorMessage = DomainConstants.MENSAJE_CAMPO_REQUIRED)]
+        public int? IdSector { get; set; }
+
+        [Required(ErrorMessage = DomainConstants.MENSAJE_CAMPO_REQUIRED)]
+        public string? Latitud { get; set; }
+
+        [Required(ErrorMessage = DomainConstants.MENSAJE_CAMPO_REQUIRED)]
+        public string? Longitud { get; set; }
+
+        public string? Sector { get; set; }
+
         public string? Ip { get; set; }
         public long Usuario { get; set; }
 
@@ -57,6 +68,10 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Models
             Direccion = cliente.Direccion;
             Telefono = cliente.Telefono;
             TipoPersona = cliente.TipoPersona ?? TipoPersona.Natural;
+            Latitud = Utilities.Utilidades.DoubleToString_FrontCO(cliente.Latitud, 6);
+            Longitud = Utilities.Utilidades.DoubleToString_FrontCO(cliente.Longitud, 6);
+            IdSector = cliente.IdSector;
+            Sector = cliente?.IdSectorNavigation?.Nombre ?? "";
         }
 
     }

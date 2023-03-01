@@ -38,7 +38,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             List<ClienteModel> clientes = new List<ClienteModel>();
             try
             {
-                ViewData["tipoIdentificacion"] = _utilidadRepository.GetTipoIdentificaciones();
+                
                 var result = _clienteAppService.ConsultarClientes();
                 if (result.TieneErrores) throw new Exception(result.MensajeError);
                 if (result.Estado)
@@ -68,6 +68,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             try
             {
                 ViewData["tipoIdentificacion"] = new SelectList(_utilidadRepository.GetTipoIdentificaciones().ToList(), "Codigo", "Nombre");
+                ViewData["sectores"] = new SelectList(_utilidadRepository.GetSectores().ToList(), "IdSector", "Nombre");
 
                 if (!string.IsNullOrEmpty(Id))
                 {
@@ -105,6 +106,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             try
             {
                 ViewData["tipoIdentificacion"] = new SelectList(_utilidadRepository.GetTipoIdentificaciones(), "Codigo", "Nombre");
+                ViewData["sectores"] = new SelectList(_utilidadRepository.GetSectores().ToList(), "IdSector", "Nombre");
 
                 if (Identification.ValidateAllTypeIdentification(model.Identificacion) != model.TipoIdentificacion)
                 {
@@ -185,13 +187,14 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
         [HttpGet]
         public IActionResult Mapa()
         {
+            ViewBag.sectores = _utilidadRepository.GetSectores();
             return View();
         }
 
         [HttpGet]
-        public JsonResult Get(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0)
+        public JsonResult Get(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0, int sector = 0)
         {
-            var result = _analisisQueryService.ConsultarTotales(masVendidos, antiguos, estadoClientePlan);
+            var result = _analisisQueryService.ConsultarTotales(masVendidos, antiguos, estadoClientePlan, sector);
 
             return Json(result);
         }

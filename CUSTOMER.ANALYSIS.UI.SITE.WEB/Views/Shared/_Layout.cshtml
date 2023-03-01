@@ -41,15 +41,15 @@
                 <div class="container-fluid">
                     @await Html.PartialAsync("~/Views/Shared/_page_title.cshtml")
 
-                    <div class="container body-content ">
+                   @* <div class="container body-content ">
                         <div id="renderbody">
                             @RenderBody()
                         </div>
-                    </div>
-
-                    @*<div id="renderbody">
-                    @RenderBody()
                     </div>*@
+
+                    <div id="renderbody">
+                    @RenderBody()
+                    </div>
 
                 </div> <!-- container-fluid -->
             </div>

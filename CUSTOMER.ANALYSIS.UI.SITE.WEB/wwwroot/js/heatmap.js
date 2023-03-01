@@ -6,6 +6,7 @@ let resultados = [];
 let masVendidos = false;
 let antiguos = false;
 let estadoClientePlan = 1;
+let sector = 0;
 
 function initMap(initialData = []) {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -24,7 +25,7 @@ function initMap(initialData = []) {
 }
 
 function getClientes() {
-    $.get(urlClientes + '/Get', { masVendidos, antiguos, estadoClientePlan }).done(function (response) {
+    $.get(urlClientes + '/Get', { masVendidos, antiguos, estadoClientePlan, sector }).done(function (response) {
         //console.log(response);
         /*resultados = response;*/
         initMap(getAllPoints(response));
@@ -71,3 +72,11 @@ function onChangeInactivos() {
     getClientes();
 }
 
+function onChangeSector(id) {
+    if ($('#chk-sector-' + id).prop('checked')) {
+        sector = id;
+    } else {
+        sector = 0;
+    }
+    getClientes();
+}

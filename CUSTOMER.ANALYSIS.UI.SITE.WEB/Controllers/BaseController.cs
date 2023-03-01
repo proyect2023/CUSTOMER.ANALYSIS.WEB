@@ -40,26 +40,28 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
 
         protected string RegistrarLogError(string origen, Exception ex, bool soloCodigo = false)
         {
-            if (soloCodigo)
-            {
-                return _logInfraServices.AddLog(origen, ex);
-            }
-            else
-            {
-                return ". Código de seguimiento: " + _logInfraServices.AddLog(origen, ex);
-            }
+            return "";
+            //if (soloCodigo)
+            //{
+            //    return _logInfraServices.AddLog(origen, ex);
+            //}
+            //else
+            //{
+            //    return ". Código de seguimiento: " + _logInfraServices.AddLog(origen, ex);
+            //}
         }
 
         protected string RegistrarLogError(string origen, string error, bool soloCodigo = false)
         {
-            if (soloCodigo)
-            {
-                return _logInfraServices.AddLog(origen, error);
-            }
-            else
-            {
-                return ". Código de seguimiento: " + _logInfraServices.AddLog(origen, error);
-            }
+            return "";
+            //if (soloCodigo)
+            //{
+            //    return _logInfraServices.AddLog(origen, error);
+            //}
+            //else
+            //{
+            //    return ". Código de seguimiento: " + _logInfraServices.AddLog(origen, error);
+            //}
         }
 
         //protected void RegistrarActividad(string CodigoActividad, string MensajeAdicional = "")

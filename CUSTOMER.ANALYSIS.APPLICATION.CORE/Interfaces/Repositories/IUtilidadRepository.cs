@@ -14,6 +14,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
         void AgregarUsuarioAdministrador();
         List<TipoIdentificacion> GetTipoIdentificaciones();
         List<TipoPlan> GetTiposPlan();
+        List<Sector> GetSectores();
     }
 }
     

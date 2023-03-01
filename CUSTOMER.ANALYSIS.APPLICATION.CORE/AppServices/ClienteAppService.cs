@@ -77,6 +77,9 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
 
                 cliente = new Cliente
                 {
+                    Latitud = decimal.Parse(Utilities.Utilidades.DepuraStrConvertNum(model.Latitud)),
+                    Longitud = decimal.Parse(Utilities.Utilidades.DepuraStrConvertNum(model.Longitud)),
+                    IdSector = model.IdSector,
                     TipoPersona = model.TipoPersona,
                     TipoIdentificacion = model.TipoIdentificacion,
                     Identificacion = model.Identificacion,
@@ -87,7 +90,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                     Ip = model.Ip,
                     UsuarioCreacion = model.Usuario,
                     FechaCreacion = Utilities.Utilidades.GetHoraActual(),
-                    Estado = true
+                    Estado = true,
+                    
                 };
 
                 _clienteRepository.Add(cliente);
@@ -127,6 +131,9 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                     }
                 }
 
+                cliente.Latitud = decimal.Parse(Utilities.Utilidades.DepuraStrConvertNum(model.Latitud));
+                cliente.Longitud = decimal.Parse(Utilities.Utilidades.DepuraStrConvertNum(model.Longitud));
+                cliente.IdSector = model.IdSector;
                 cliente.TipoPersona = model.TipoPersona;
                 cliente.TipoIdentificacion = model.TipoIdentificacion;
                 cliente.Identificacion = model.Identificacion;

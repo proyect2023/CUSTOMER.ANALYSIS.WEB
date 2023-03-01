@@ -26,6 +26,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities
         public DateTime? FechaModificacion { get; set; }
         public long? UsuarioEliminacion { get; set; }
         public DateTime? FechaEliminacion { get; set; }
+        public virtual int? IdSector { get; set; }
+        public virtual Sector? IdSectorNavigation { get; set; }
         public virtual ICollection<ClientePlan> ClientePlans { get; } = new List<ClientePlan>();
 
     }

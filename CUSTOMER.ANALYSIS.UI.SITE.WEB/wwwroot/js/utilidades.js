@@ -269,3 +269,7 @@ $(".input-texto").bind('keypress', function (event) {
         return false;
     }
 });
+
+//$('.mask-localization').inputmask({
+//    regex: String.raw`^[-/*][0-9]{3}[.][0-9]{7}$`
+//});

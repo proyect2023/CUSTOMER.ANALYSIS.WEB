@@ -137,7 +137,6 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
             }
         }
 
-
         public List<TipoIdentificacion> GetTipoIdentificaciones()
         {
             return _context.TipoIdentificacion.Where(x => x.Estado).ToList();
@@ -148,6 +147,9 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
             return _context.TipoPlans.Where(x => x.Estado == true).ToList();
         }
 
-
+        public List<Sector> GetSectores()
+        {
+            return _context.Sector.Where(x => x.Estado == true).ToList();
+        }
     }
 }

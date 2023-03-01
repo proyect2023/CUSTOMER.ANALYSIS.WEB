@@ -10,6 +10,7 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Data
 {
     public partial class EFContext
     {
+        public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<ClientePlan> ClientePlans { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
@@ -17,12 +18,20 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Data
         public virtual DbSet<TipoIdentificacion> TipoIdentificacion { get; set; }
         partial void OnModelCreatingPartialCliente(ModelBuilder modelBuilder) 
         {
+            modelBuilder.Entity<Sector>(entity =>
+            {
+                entity.HasKey(e => e.IdSector).HasName("PK__Auditori__5EAF86A429612FD4");
+                entity.ToTable("Sector");
+            });
+            
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.IdCliente).HasName("PK__Auditori__5EAF86A429612FD4");
                 entity.ToTable("Cliente");
+                entity.HasOne(d => d.IdSectorNavigation).WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.IdSector)
+                    .HasConstraintName("FK__ClientePl__IdPla__5070F446");
             });
-
 
             modelBuilder.Entity<ClientePlan>(entity =>
             {

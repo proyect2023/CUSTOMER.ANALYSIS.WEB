@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Clientes";
     ViewBag.pTitle = "Clientes";
-    ViewBag.pageTitle = "Configuración";
+    ViewBag.pageTitle = "Mantenimiento";
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -45,13 +45,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label id="label-RazonSocial" asp-for="RazonSocial" class="control-label">Nombres completos <span class="text-danger">*</span></label>
                         <input asp-for="RazonSocial" class="form-control input-texto" />
                         <span asp-validation-for="RazonSocial" class="text-danger"></span>
                     </div>
                 </div>
+
             </div>
 
              <br />
@@ -83,6 +84,38 @@
 
             <br />
 
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="IdSector" class="control-label">Sector: <span class="text-danger">*</span></label>
+                        <select asp-for="IdSector" class=" form-control select2" asp-items="ViewBag.sectores">
+                            <option value="" selected disabled>--Seleccionar--</option>
+                        </select>
+                        <span asp-validation-for="IdSector" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Latitud" class="control-label">Latitud: <span class="text-danger">*</span></label>
+                        <div class="input-group mb-3">
+                            @*<span class="input-group-text" id="basic-addon1"></span>*@
+                            <input asp-for="Latitud" class="form-control decimal" />
+                        </div>
+                        
+                        <span asp-validation-for="Latitud" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Longitud" class="control-label">Longitud: <span class="text-danger">*</span></label>
+                        <input asp-for="Longitud" class="form-control decimal" />
+                        <span asp-validation-for="Longitud" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
             <div class="form-group">
                 @if (ViewBag.EsNuevo)
                 {
@@ -101,10 +134,35 @@
 @section Scripts {
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @*<script src="~/lib/jquery.mask/jquery.mask.min.js"></script>*@
+    @*<script src="~/lib/inputmask/dist/inputmask.min.js"></script>
+    <script src="~/lib/inputmask/dist/jquery.inputmask.min.js"></script>*@
+    <script src="~/lib/plentz-jquery-maskmoney-cdbeeac/dist/jquery.maskMoney.min.js"></script>
     <script src="~/js/person.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
     <script>
         $(document).ready(function () {
-            
+            $(".select2").select2();
+            //$(".decimal").maskMoney();
+            //$('.mask-localization-1').mask('-0.000000');
+            //$('.mask-localization-2').mask('-00.000000');
+            //$('.mask-localization-3').mask('00.000000');
+            //$('.mask-localization-4').mask('0.000000');
+
+            //$("#Latitud").inputmask({
+            //    mask: "E|W99[9].999",
+            //    definitions: {
+            //        "E": {
+            //            validator: "[eE]",
+            //            cardinality: 1,
+            //            casing: "upper"
+            //        },
+            //        "W": {
+            //            validator: "[wW]",
+            //            cardinality: 1,
+            //            casing: "upper"
+            //        }
+            //    }
+            //});
         });
 
     </script>

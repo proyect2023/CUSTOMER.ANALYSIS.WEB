@@ -5,6 +5,15 @@
     {
       "library": "summernote@0.8.20",
       "destination": "wwwroot/lib/summernote/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery-mask-plugin@1.14.16",
+      "destination": "wwwroot/lib/jquery-mask-plugin/"
+    },
+    {
+      "library": "jquery.mask@1.14.16",
+      "destination": "wwwroot/lib/jquery.mask/"
     }
   ]
 }

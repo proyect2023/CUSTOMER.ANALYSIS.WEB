@@ -20,9 +20,9 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.QueryServices
             this.context = context;
         }
 
-        public List<ConsultarTotalesDto> ConsultarTotales(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0)
+        public List<ConsultarTotalesDto> ConsultarTotales(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0, int sector = 0)
         {
-            return context.ConsultarTotales(masVendidos, antiguos, estadoClientePlan).ToList();
+            return context.ConsultarTotales(masVendidos, antiguos, estadoClientePlan, sector).ToList();
         }
 
     }
