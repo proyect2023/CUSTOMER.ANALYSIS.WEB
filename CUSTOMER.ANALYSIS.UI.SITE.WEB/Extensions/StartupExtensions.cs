@@ -1,6 +1,4 @@
-﻿
-
-using CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices;
+﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.DomainServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces;
@@ -20,13 +18,9 @@ using CUSTOMER.ANALYSIS.REPOSITORY.QueryServices;
 using CUSTOMER.ANALYSIS.REPOSITORY.Repositories;
 using CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters;
 using CUSTOMER.ANALYSIS.UI.WEB.SITE.Settings;
-using CUSTOMER.ANALYSIS.WEB;
 using GS.IO.Constants;
 using GS.TOOLS;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using NLog;
-using System;
 
 namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
 {
@@ -39,7 +33,6 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
             services.AddScoped<IMailRepository, MailRepository>();
             services.AddScoped<INotificacionRepository, NotificacionRepository>();
             services.AddScoped<IPermisoRepository, PermisoRepository>();
-            //services.AddScoped<IRepository, Repository>();
             services.AddScoped<IRolRepository, RolRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUtilidadRepository, UtilidadRepository>();
@@ -47,8 +40,6 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
             services.AddScoped<IRolQueryService, RolQueryService>();
             services.AddScoped<IAnalisisQueryService, AnalisisQueryService>();
             services.AddScoped<IPlanRepository, PlanRepository>();
-            
-            //services.AddScoped<IUsuarioQueryService, UsuarioQueryService>();
         }
 
         public static void AddServices(this IServiceCollection services)
