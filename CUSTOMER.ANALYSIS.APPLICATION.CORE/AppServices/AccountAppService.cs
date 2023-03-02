@@ -102,7 +102,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             }
         }
 
-        public MethodResponseDto Login(string username, string password, string ip, bool DirActivo = false, string NomUsrDirAct = null, string GrupoUsuarioDirActivo = null)
+        public MethodResponseDto Login(string username, string password, string ip, bool fake = false)
         {
             MethodResponseDto responseDto = new MethodResponseDto();
             try
@@ -120,7 +120,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                     return responseDto;
                 }
 
-                if (!GSCrypto.ConfirmHashV1(password, usuario.Password))
+                if (!fake && !GSCrypto.ConfirmHashV1(password, usuario.Password))
                 {
                     if (usuario.IntentosFallidos is null) usuario.IntentosFallidos = 0;
                     usuario.IntentosFallidos++;

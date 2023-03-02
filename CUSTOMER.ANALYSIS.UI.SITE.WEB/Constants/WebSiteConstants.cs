@@ -31,5 +31,7 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants
 
         Clientes = 201,
         Planes = 202,
+
+        Mapa = 301
     }
 }

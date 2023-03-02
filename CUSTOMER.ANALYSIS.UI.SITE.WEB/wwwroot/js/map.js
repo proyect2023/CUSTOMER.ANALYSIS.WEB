@@ -7,29 +7,14 @@ let masVendidos = false;
 let antiguos = false;
 let estadoClientePlan = 1;
 let sector = 0;
-
-function initMap(initialData = []) {
-    var options = {
-        zoom: 15,
-        center: {
-            lat: -2.167485,
-            lng: -79.462470
-        },
-        mapTypeId: "satellite"
-    };
-    map = new google.maps.Map(document.getElementById("map"), options);
-    heatmap = new google.maps.visualization.HeatmapLayer({
-        data: initialData,
-        map: map
-    });
-    heatmap.set("radius", heatmap.get("radius") ? null : 18);
-}
+var clintes = [];
 
 function getClientes() {
     $.get(urlClientes + '/Get', { masVendidos, antiguos, estadoClientePlan, sector }).done(function (response) {
         //console.log(response);
         /*resultados = response;*/
-        initMap(getAllPoints(response));
+        clintes = response;
+        initMap(response);
     }).fail(function (error) {
         console.error(error);
     })
@@ -39,12 +24,52 @@ function getAllPoints(initialData = []) {
     var locs = [];
     resultados = [];
     initialData.forEach(x => {
-        resultados.push({ latitud: x.latitud, longitud: x.longitud});
+        resultados.push({ latitud: x.latitud, longitud: x.longitud });
         locs.push(new google.maps.LatLng(x.latitud, x.longitud));
     });
     console.log('Cantidad de consultas', resultados.length);
     return locs;
 }
+
+function initMap(initialData = []) {
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: {
+            lat: -2.167485,
+            lng: -79.462470
+        },
+        mapTypeId: "satellite"
+    });
+
+    // Create an info window to share between markers.
+    const infoWindow = new google.maps.InfoWindow();
+
+    // Create the markers.();
+    initialData.forEach(item => {
+        const marker = new google.maps.Marker({
+            position: {
+                lat: item.latitud,
+                lng: item.longitud
+            },
+            map,
+            title: `${item.identificacion} - ${item.razonSocial}`,
+            //label: item.razonSocial,
+            optimized: false,
+        });
+
+        // Add a click listener for each marker, and set up the info window.
+        marker.addListener("click", () => {
+            infoWindow.close();
+            infoWindow.setContent(marker.getTitle());
+            infoWindow.open(marker.getMap(), marker);
+        });
+    });
+
+    window.initMap = initMap;
+    
+}
+
 
 function onChangeMasVendidos() {
     if ($('#chk-clientes-con-ventas').prop('checked')) {
@@ -81,3 +106,5 @@ function onChangeSector(id) {
     }
     getClientes();
 }
+
+window.initMap = initMap;

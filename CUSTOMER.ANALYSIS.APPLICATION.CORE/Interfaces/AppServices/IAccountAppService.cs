@@ -11,7 +11,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.AppServices
     public interface IAccountAppService
     {
         (List<Menu>, string) LoadMenu(long IdUsuario);
-        MethodResponseDto Login(string username, string password, string ip, bool DirActivo = false, string NomUsrDirAct = null, string GrupoUsuarioDirActivo = null);
+        MethodResponseDto Login(string username, string password, string ip, bool fake = false);
         MethodResponseDto RecuperarPassword(string username, string email);
         MethodResponseDto CambiarPassword(long id, string ClaveActual, string ClaveNueva, string ClaveNuevaConfirma, bool EsCorreoRecuperacion);
         //MethodResponseDto ConsultarFinca();

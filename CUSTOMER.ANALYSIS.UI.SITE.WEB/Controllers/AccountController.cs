@@ -101,7 +101,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
 
                         var IPLogin = HttpContext.Connection.RemoteIpAddress.ToString();
 
-                        var resultLogin = _accountAppService.Login(usr.Usuario, usr.Clave, IPLogin);
+                        var resultLogin = _accountAppService.Login(usr.Usuario, usr.Clave, IPLogin, false);
                         if (resultLogin.TieneErrores) throw new Exception(resultLogin.MensajeError);
 
                         if (!resultLogin.Estado)

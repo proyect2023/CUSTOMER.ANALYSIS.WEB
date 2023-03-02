@@ -184,19 +184,6 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Mapa()
-        {
-            ViewBag.sectores = _utilidadRepository.GetSectores();
-            return View();
-        }
-
-        [HttpGet]
-        public JsonResult Get(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0, int sector = 0)
-        {
-            var result = _analisisQueryService.ConsultarTotales(masVendidos, antiguos, estadoClientePlan, sector);
-
-            return Json(result);
-        }
+        
     }
 }
