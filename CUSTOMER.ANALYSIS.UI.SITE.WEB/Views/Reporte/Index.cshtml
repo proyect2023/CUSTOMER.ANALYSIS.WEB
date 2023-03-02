@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "Ventas";
+    ViewBag.pTitle = "Ventas";
+    ViewBag.pageTitle = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body" style="padding-bottom: 0;">
+                <div class="toolbar">
+                    <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+                        Seleccione los parámetros para realizar la consulta.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <p id="sub-text">Parámetros de Consulta</p>
+                    </div>
+                    <div class="row">
+                        <!-- Estado EDOC -->
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <select id="animal" class="form-control select2" data-placeholder="Escoger ..." asp-items="@Html.GetEnumSelectList<CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants.EstadoPlan>()">
+                                    <option value="0">Todos</option>
+                                </select>
+                                <small>Estados</small>
+                            </div>
+                        </div>
+
+                        <!-- Selector Rango de Fecha -->
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <div>
+                                    <div class="input-daterange input-group align-baseline" data-provide="datepicker">
+                                        <input style="cursor: pointer" readonly placeholder="Desde" id="fechaInicio2" type="text" class="datepicker form-control" name="start" />
+                                        <input style="cursor: pointer" readonly placeholder="Hasta" id="fechaFin2" type="text" class="datepicker form-control" name="end" />
+                                    </div>
+                                    <small>Rango de Fecha</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <div class="input-group">
+                                    <button id="idBotonConsultarEmitidos" type="button" class="btn btn-outline-secondary btn-block">Consultar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div id="tablaDetalle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/assets/libs/jszip/jszip.min.js"></script>
+    <script src="~/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Required datatable js -->
+    <script src="~/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+
+    <script src="~/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/assets/libs/parsleyjs/parsley.min.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.es.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".select2").select2();
+            $("#fechaInicio2").datepicker({
+                format: 'yyyy-mm-dd', orientation: "bottom auto", language: 'es'
+            });
+
+            $("#fechaFin2").datepicker({
+                format: 'yyyy-mm-dd', orientation: "bottom auto", language: 'es'
+            });
+        });
+
+        $(function () {
+
+            $("#idBotonConsultarEmitidos").click(function () {
+
+                var estado = $("#animal").val();
+                var valorFechaInicio = $("#fechaInicio2").val();
+                var valorFechaFin = $("#fechaFin2").val();
+
+                if (ValidarCampos(estado, valorFechaInicio, valorFechaFin)) {
+                    getDetalle(
+                        estado,
+                        valorFechaInicio,
+                        valorFechaFin
+                    );
+                } else {
+                    Swal.fire({
+                        title: 'Campos Incompletos!',
+                        text: 'Asegurese de enviar los parámetros completos para realizar la consulta.',
+                        type: "error",
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: false,
+                        footer: " Por favor, intente nuevamente."
+                    });
+                }
+            });
+        });
+
+        function ValidarCampos(estado, valorFechaInicio, valorFechaFin) {
+
+            if (estado < 0) {
+                return false;
+            }
+            if (valorFechaInicio == "") {
+                return false;
+            }
+            if (valorFechaFin == "") {
+                return false
+            }
+            return true;
+        }
+
+        function getDetalle(estado, valorFechaInicio, valorFechaFin) {
+            Swal.fire({
+                icon: "info",
+                allowOutsideClick: false,
+                title: 'Consultando Información',
+                text: 'Espere, por favor!...',
+                timer: 150000
+            });
+            Swal.showLoading();
+            $.post("@Url.Action("ConsultarVentas", "Reporte")", {
+
+                estado: estado,
+                fechaInicio: valorFechaInicio,
+                fechaFin: valorFechaFin
+            }, function (response) {
+                // si sale todo perfecto, pinta la tabla recibida desde el parcial
+                $("#tablaDetalle").html(response);
+                Swal.close();
+            }).fail(function (error) {
+                // en caso de error
+                //console.log(error);
+                Swal.fire({
+                    title: '¡Lo sentimos!',
+                    text: 'Se ha generado un error técnico no controlado en el proceso.',
+                    type: "error",
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    footer: "Técnico, por favor consulte el archivo.log"
+                });
+            });
+        }
+
+    </script>
+
+
+}
