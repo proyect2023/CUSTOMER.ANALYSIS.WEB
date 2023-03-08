@@ -1,4 +1,4 @@
-﻿@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.ClienteModel>
+﻿@*@model List<CUSTOMER.ANALYSIS.APPLICATION.CORE.Models.ClienteModel>*@
 
 @{
     ViewBag.Title = "Clientes";
@@ -11,39 +11,31 @@
     <div class="card-body">
         <a asp-action="Registrar" class="btn btn-success">Nuevo</a>
         @*<a asp-action="Mapa" class="btn btn-success">Ver Mapa</a>*@
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Tipo</label>
+                        <select id="Tipo" class="form-control" onchange="onChangeTipo()">
+                            <option value="0">Todo</option>
+                            <option value="1">Tipo de Identificación</option>
+                            <option value="2">Identificación</option>
+                            <option value="3">Nombres</option>
+                            <option value="4">Teléfono</option>
+                            <option value="5">Sector</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Descripción</label>
+                        <input id="Descripcion" class="form-control" />
+                    </div>
+                    <div class="col-md-3 d-grid gap-2" style="align-self: end;">
+                        <button class="btn btn-info" type="button" onclick="construirTabla()" style="height: 100%">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class="datatable table dt-responsive table-hover table-sm table-bordered">
-            <thead>
-                <tr>
-                    <th>Acción</th>
-                    <th>Nombres</th>
-                    <th>Tipo Identificación</th>
-                    <th>Identificación</th>
-                    <th>Teléfono</th>
-                    <th>Sector</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var TipoDocumento = ViewBag.tipoIdentificacion as List<CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities.TipoIdentificacion>;
-                }
-                @foreach (var item in Model)
-                {
-                    string localizacion = $"{item.Latitud}, {item.Longitud}";
-                    string url = $"https://www.google.com.ec/maps/@{localizacion},19z?hl=es";
-                    <tr>
-                        <td class="text-center">
-                            <a asp-action="Registrar" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                            <button type="button" class="btn btn-danger btn-eliminar" value="@item.Id"><i class="fa fa-trash"></i></button>
-                            @*<a href="@url" target="_blank" class="btn btn-success"><i class="fa fa-map"></i></a>*@
-                        </td>
-                        <td>@item.RazonSocial</td>
-                        <td>@(TipoDocumento?.FirstOrDefault(x => x.Codigo == item.TipoIdentificacion)?.Nombre ?? "Tipo no reconocido")</td>
-                        <td>@item.Identificacion</td>
-                        <td>@item.Telefono</td>
-                        <td>@item.Sector</td>
-                    </tr>
-                }
-            </tbody>
         </table>
     </div>
 </div>
@@ -53,13 +45,37 @@
 
     <script>
         $(document).ready(function () {
+            $("#Descripcion").prop('disabled', true);
+            construirTabla();
             var table = $(".datatable").DataTable({
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
                 },
+                "searching": false,
                 "pageLength": 5,
                 "lengthMenu": [5, 10, 25, 50, 100],
                 "order": [[1, 'asc']],
+                "aoColumns": [
+                    { sTitle: "Acción", mData: 'id', sClass: "text-center", 
+                        mRender: function (data, type, full) {
+                             var buttons = '';
+                            buttons +=`
+                                    <a class="btn btn-info" href="@Url.Action("Registrar", "Cliente")/?id=${data}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${data}');">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                            `;
+                            return buttons;
+                        } 
+                    },
+                    { sTitle: "Nombres", mData: 'razonSocial', sClass: "text-center", },
+                    { sTitle: "Tipo Identificación", mData: 'tipoIdentificacion', sClass: "text-center", },
+                    { sTitle: "Identificación", mData: 'identificacion', sClass: "text-center", },
+                    { sTitle: "Teléfono", mData: 'telefono', sClass: "text-center", },
+                    { sTitle: "Sector", mData: 'sector', sClass: "text-center", },
+                ],
                 "columnDefs": [
                     {
                         targets: 0,
@@ -68,12 +84,52 @@
                 ]
             });
 
-            $(".btn-eliminar").click(function () {
-                var id = $(this).val();
-                console.log(id)
-                ConfirmacionEliminar("@Url.Action("Eliminar", "Clientes")", '@Url.Action("Index", "Clientes")', { Id: id } );
-            });
         });
+
+        const construirTabla = () => {
+
+            $.ajax({
+                url: '@Url.Action("Get", "Cliente")',
+                type: 'GET',
+                data: {
+                    "Tipo": $("#Tipo").val(),
+                    "Descripcion": $("#Descripcion").val()
+                },
+                cache: false,
+                success: function (result) {
+                    DetenerLoading();
+                    if (result.estado) {
+                        var oTable = $('.datatable').dataTable();
+                        oTable.fnClearTable();
+                        $.each(result.data, function (i, item) {
+                            oTable.fnAddData(item);
+                        });
+                    } else {
+                        MensajeErrorSwal(result.mensaje);
+                    }
+                },
+                error: function (jqXHR, textStatus, error) {
+                    MsgAjaxError(error);
+                    DetenerLoading();
+                }
+            });
+        }
+
+        function eliminarRegistro(id){
+            //var id = $(this).attr("value");
+            ConfirmacionEliminar("@Url.Action("Eliminar", "Cliente")", '@Url.Action("Index", "Cliente")', { Id: id });
+        }
+
+        const onChangeTipo = () => {
+            var tipo = $("#Tipo").val() || 0;
+            if (tipo === 0 || tipo === '0') {
+                $("#Descripcion").val("");
+                construirTabla();
+                $("#Descripcion").prop('disabled', true);
+            } else{
+                $("#Descripcion").prop('disabled', false);
+            }
+        }
     </script>
     @Html.Raw(TempData["msg"])
 }

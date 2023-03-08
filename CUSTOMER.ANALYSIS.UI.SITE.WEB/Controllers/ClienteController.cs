@@ -1,5 +1,6 @@
 ﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.Constants;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs;
+using CUSTOMER.ANALYSIS.APPLICATION.CORE.Entities;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.AppServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.QueryServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories;
@@ -35,28 +36,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
 
         public IActionResult Index()
         {
-            List<ClienteModel> clientes = new List<ClienteModel>();
-            try
-            {
-                
-                var result = _clienteAppService.ConsultarClientes();
-                if (result.TieneErrores) throw new Exception(result.MensajeError);
-                if (result.Estado)
-                {
-                    clientes = result.Data;
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["msg"] = WebSiteConstants.MENSAJE_SWEET_ALERT_ERROR.Replace("{Mensaje_Respuesta}", DomainConstants.ObtenerDescripcionError(DomainConstants.ERROR_GENERAL) + RegistrarLogError(this.GetCaller(), ex));
-            }
-            finally
-            {
-                //RegistrarActividad(CodigoActividad.COD_INFORMACION_GENERAL_CLIENTE);
-
-            }
-
-            return View(clientes);
+            return View();
         }
 
         [HttpGet]
@@ -184,6 +164,30 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
             }
         }
 
-        
+        [HttpGet]
+        public JsonResult Get(int Tipo, string Descripcion)
+        {
+            List<ClienteModel> clientes = new List<ClienteModel>();
+            try
+            {
+                var result = _clienteAppService.ConsultarClientesPorParametros(Tipo, Descripcion);
+                if (result.TieneErrores) throw new Exception(result.MensajeError);
+                if (result.Estado)
+                {
+                    clientes = result.Data;
+                    var TipoDocumento = _utilidadRepository.GetTipoIdentificaciones();
+                    clientes.ForEach(item =>
+                    {
+                        item.TipoIdentificacion = TipoDocumento.FirstOrDefault(x => x.Codigo == item.TipoIdentificacion)?.Nombre ?? "Tipo no reconocido";
+                    });
+                }
+
+                return Json(new ResponseToViewDto { Estado = true, Data = clientes });
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResponseToViewDto { Estado = false, Mensaje = DomainConstants.ObtenerDescripcionError(DomainConstants.ERROR_GENERAL) + RegistrarLogError(this.GetCaller(), ex) });
+            }
+        }
     }
 }

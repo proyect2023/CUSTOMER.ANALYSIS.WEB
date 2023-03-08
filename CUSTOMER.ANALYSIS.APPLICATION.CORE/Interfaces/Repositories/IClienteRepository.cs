@@ -9,6 +9,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories
     public interface IClienteRepository : IRepository<Cliente>
     {
         List<Cliente> GetClientes();
+        List<Cliente>? GetClientes(int Tipo, string Descripcion);
         List<ClientePlan> GetClientePlan(DateTime fechaInicio, DateTime fechaFin, EstadoPlan EstadoPlan);
     }
 }

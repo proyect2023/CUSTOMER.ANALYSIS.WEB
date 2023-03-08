@@ -9,6 +9,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.AppServices
     public interface IClienteAppService
     {
         MethodResponseDto ConsultarClientes();
+        MethodResponseDto ConsultarClientesPorParametros(int Tipo, string Descripcion);
         MethodResponseDto ConsultarCliente(string ID);
         MethodResponseDto CrearCliente(ClienteModel model);
         MethodResponseDto EditarCliente(ClienteModel model);

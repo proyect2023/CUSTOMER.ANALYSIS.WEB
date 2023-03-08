@@ -22,6 +22,25 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             _clienteRepository = clienteRepository;
         }
 
+        public MethodResponseDto ConsultarClientesPorParametros(int Tipo, string Descripcion)
+        {
+            MethodResponseDto responseDto = new MethodResponseDto();
+            try
+            {
+                var result = _clienteRepository.GetClientes(Tipo, Descripcion);
+
+                responseDto.Data = result.Select(cliente => new ClienteModel(cliente)).ToList();
+
+                responseDto.Estado = true;
+            }
+            catch (Exception ex)
+            {
+                responseDto.MensajeError = string.Format("{0} => {1}", this.GetCaller(), GSConversions.ExceptionToString(ex));
+                responseDto.TieneErrores = true;
+            }
+            return responseDto;
+        }
+        
         public MethodResponseDto ConsultarClientes()
         {
             MethodResponseDto responseDto = new MethodResponseDto();
