@@ -10,9 +10,9 @@ namespace CUSTOMER.ANALYSIS.REPOSITORY.Data
 {
     public partial class EFContext
     {
-        internal IEnumerable<ConsultarTotalesDto> ConsultarTotales(bool masVendidos = false, bool antiguos = false, int estadoClientePlan = 0, int sector = 0)
+        internal IEnumerable<ConsultarTotalesDto> ConsultarTotales(string validaciones, string sectores, string planes)
         {
-            return ConsultarTotalesDto.FromSqlRaw("QRY_ConsultarTotales @p0, @p1, @p2, @p3", masVendidos, antiguos, estadoClientePlan, sector).ToList();
+            return ConsultarTotalesDto.FromSqlRaw("QRY_ConsultarTotales @p0, @p1, @p2", validaciones, sectores, planes).ToList();
         }
     }
 }

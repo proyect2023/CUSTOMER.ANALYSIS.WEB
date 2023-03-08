@@ -3,14 +3,22 @@
 let map, heatmap;
 let urlClientes = "";
 let resultados = [];
-let masVendidos = false;
-let antiguos = false;
-let estadoClientePlan = 1;
-let sector = 0;
-var clintes = [];
+let clintes = [];
 
 function getClientes() {
-    $.get(urlClientes + '/Get', { masVendidos, antiguos, estadoClientePlan, sector }).done(function (response) {
+    const validaciones = $("#sel-validaciones").val();
+    const sectores = $("#sel-sectores").val();
+    const planes = $("#sel-planes").val();
+
+    console.log('validaciones', validaciones);
+    console.log('sectores', sectores);
+    console.log('planes', planes);
+
+    $.post(urlClientes + '/Get', {
+        validaciones: validaciones, 
+        sectores: sectores,
+        planes: planes
+    }).done(function (response) {
         //console.log(response);
         /*resultados = response;*/
         clintes = response;
@@ -71,40 +79,40 @@ function initMap(initialData = []) {
 }
 
 
-function onChangeMasVendidos() {
-    if ($('#chk-clientes-con-ventas').prop('checked')) {
-        masVendidos = true;
-    } else {
-        masVendidos = false;
-    }
-    getClientes();
-}
+//function onChangeMasVendidos() {
+//    if ($('#chk-clientes-con-ventas').prop('checked')) {
+//        masVendidos = true;
+//    } else {
+//        masVendidos = false;
+//    }
+//    getClientes();
+//}
 
-function onChangeAntiguos() {
-    if ($('#chk-clientes-antiguos').prop('checked')) {
-        antiguos = true;
-    } else {
-        antiguos = false;
-    }
-    getClientes();
-}
+//function onChangeAntiguos() {
+//    if ($('#chk-clientes-antiguos').prop('checked')) {
+//        antiguos = true;
+//    } else {
+//        antiguos = false;
+//    }
+//    getClientes();
+//}
 
-function onChangeInactivos() {
-    if ($('#chk-clientes-inactivos').prop('checked')) {
-        estadoClientePlan = 2;
-    } else {
-        estadoClientePlan = 1;
-    }
-    getClientes();
-}
+//function onChangeInactivos() {
+//    if ($('#chk-clientes-inactivos').prop('checked')) {
+//        estadoClientePlan = 2;
+//    } else {
+//        estadoClientePlan = 1;
+//    }
+//    getClientes();
+//}
 
-function onChangeSector(id) {
-    if ($('#chk-sector-' + id).prop('checked')) {
-        sector = id;
-    } else {
-        sector = 0;
-    }
-    getClientes();
-}
+//function onChangeSector(id) {
+//    if ($('#chk-sector-' + id).prop('checked')) {
+//        sector = id;
+//    } else {
+//        sector = 0;
+//    }
+//    getClientes();
+//}
 
 window.initMap = initMap;

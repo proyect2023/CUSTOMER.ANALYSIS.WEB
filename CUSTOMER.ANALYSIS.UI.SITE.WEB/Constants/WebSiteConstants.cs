@@ -32,8 +32,13 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Constants
         Clientes = 201,
         Planes = 202,
 
-        Mapa = 301,
+        
+        Mapa = 300,
+        MapaMarcador = 301,
+        MapaCalor = 302,
 
-        Reporte = 400
+        Reporte = 400,
+
+        Parametros = 500,
     }
 }
