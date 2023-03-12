@@ -16,6 +16,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.QueryServices
         public decimal? Longitud { get; set; }
         public string? Plan { get; set; }
         public string? TipoPlan { get; set; }
+        public string? Telefono { get; set; }
         //public string? TotalMeses { get; set; }
         //public string? TotalPagoMeses { get; set; }
     }

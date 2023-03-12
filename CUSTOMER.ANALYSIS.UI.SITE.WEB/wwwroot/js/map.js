@@ -52,7 +52,7 @@ function initMap(initialData = []) {
 
     // Create an info window to share between markers.
     const infoWindow = new google.maps.InfoWindow();
-
+    
     // Create the markers.();
     initialData.forEach(item => {
         const marker = new google.maps.Marker({
@@ -61,7 +61,7 @@ function initMap(initialData = []) {
                 lng: item.longitud
             },
             map,
-            title: `${item.identificacion} - ${item.razonSocial}`,
+            title: `<p><b>Nombres</b>: ${item.identificacion} - ${item.razonSocial}</p><p><b>Teléfono</b>: ${item.telefono}</p><p><b>Coordenadas</b>: ${item.latitud}, ${item.longitud}</p>`,
             //label: item.razonSocial,
             optimized: false,
         });

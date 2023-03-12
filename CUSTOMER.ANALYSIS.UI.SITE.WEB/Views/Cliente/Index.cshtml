@@ -44,6 +44,9 @@
 @section Scripts {
 
     <script>
+
+        
+
         $(document).ready(function () {
             $("#Descripcion").prop('disabled', true);
             construirTabla();
@@ -56,25 +59,26 @@
                 "lengthMenu": [5, 10, 25, 50, 100],
                 "order": [[1, 'asc']],
                 "aoColumns": [
-                    { sTitle: "Acción", mData: 'id', sClass: "text-center", 
-                        mRender: function (data, type, full) {
-                             var buttons = '';
-                            buttons +=`
-                                    <a class="btn btn-info" href="@Url.Action("Registrar", "Cliente")/?id=${data}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${data}');">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                            `;
-                            return buttons;
-                        } 
-                    },
                     { sTitle: "Nombres", mData: 'razonSocial', sClass: "text-center", },
                     { sTitle: "Tipo Identificación", mData: 'tipoIdentificacion', sClass: "text-center", },
                     { sTitle: "Identificación", mData: 'identificacion', sClass: "text-center", },
                     { sTitle: "Teléfono", mData: 'telefono', sClass: "text-center", },
                     { sTitle: "Sector", mData: 'sector', sClass: "text-center", },
+                    {
+                        sTitle: "Acción", mData: 'id', sClass: "text-center",
+                        mRender: function (data, type, full) {
+                            const dropdown = `<div class="btn-group">
+                                              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Acciones
+                                              </button>
+                                              <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="@Url.Action("Registrar", "Cliente")/?id=${data}" >Editar</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="eliminarRegistro('${data}');">Eliminar</a></li>
+                                              </ul>
+                                            </div>`
+                            return dropdown;
+                        }
+                    },
                 ],
                 "columnDefs": [
                     {
