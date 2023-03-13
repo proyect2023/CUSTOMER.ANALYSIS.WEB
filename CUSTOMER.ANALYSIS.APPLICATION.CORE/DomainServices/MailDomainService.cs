@@ -124,7 +124,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.DomainServices
 
             try
             {
-                (bool result, string error) = _envioMail.EnviarCorreo(mail.Correos, mail.Asunto, mail.Mensaje, true);
+                (bool result, string error) = _envioMail.EnviarCorreo(mail, true);
                 if (result)
                 {
                     mail.FechaEnvio = Utilidades.GetHoraActual();

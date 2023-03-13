@@ -1,4 +1,5 @@
 ﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants;
+using CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Services;
 using System;
 using System.Net;
@@ -23,22 +24,46 @@ namespace CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.Services
             };
         }
 
-        public (bool, string) EnviarCorreo(string destinatario, string asunto, string mensaje, bool esHtlm = false)
+        public (bool, string) EnviarCorreo(MailDto mail, bool esHtlm = false)
         {
             try
             {
-                email = new MailMessage(GlobalSettings.ConfiguracionMailUser, destinatario, asunto, mensaje);
-                email.IsBodyHtml = esHtlm;
-                //email.Bcc = new MailAddressCollection();
+                string[] correos = mail.Correos.Split(";").ToArray();
+                var attachments = new List<Attachment>();
 
+                if (mail.Adjuntos != null && mail.Adjuntos.Any())
+                {
+                    foreach (var item in mail.Adjuntos)
+                    {
+                        var attachment = new Attachment(new MemoryStream(item.Adjunto), item.Nombre);
+                        attachments.Add(attachment);
+                    }
+                }
 
-                cliente.Send(email);
+                foreach (var item in correos)
+                {
+                    MailMessage email = new MailMessage(GlobalSettings.ConfiguracionMailUser, item, mail.Asunto, mail.Mensaje);
+                    email.IsBodyHtml = esHtlm;
+
+                    foreach (var attachment in attachments)
+                    {
+                        email.Attachments.Add(attachment);
+                    }
+
+                    cliente.Send(email);
+                }
+
                 return (true, null);
             }
             catch (Exception ex)
             {
                 return (false, ex.Message);
             }
+        }
+
+        private void ProcesarCorreo(string correo, List<AdjuntoDto> adjuntoDtos)
+        {
+
         }
 
         public void EnviarCorreo(MailMessage message)

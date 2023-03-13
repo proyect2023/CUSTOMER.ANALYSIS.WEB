@@ -30,7 +30,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants
     public enum TipoMail
     {
         Bienvenida = 1,
-        RecuperarContraseña = 2
+        RecuperarContraseña = 2,
+        Reporte = 3
     }
 
     public enum EstadosEnvioMail

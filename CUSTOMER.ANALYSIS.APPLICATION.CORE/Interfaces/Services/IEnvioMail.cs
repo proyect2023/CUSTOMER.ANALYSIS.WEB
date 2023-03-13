@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs.AppServices;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
@@ -8,7 +9,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Services
 {
     public interface IEnvioMail
     {
-        (bool, string) EnviarCorreo(string destinatario, string asunto, string mensaje, bool esHtlm = false);
+        (bool, string) EnviarCorreo(MailDto mail, bool esHtlm = false);
         void EnviarCorreo(MailMessage message);
         Task EnviarCorreoAsync(MailMessage message);
     }

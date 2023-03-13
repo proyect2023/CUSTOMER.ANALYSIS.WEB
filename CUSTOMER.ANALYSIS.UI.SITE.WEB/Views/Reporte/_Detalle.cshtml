@@ -21,7 +21,7 @@
                     <td class='text-center'>@row.IdPlanNavigation?.Nombre</td>
                     <td class='text-center'>@row.IdPlanNavigation?.IdTipoPlanNavigation?.Nombre</td>
                     <td class='text-center'>@row.IdClienteNavigation?.IdSectorNavigation?.Nombre</td>
-                    <td class='text-center'>@row.FechaContratacion</td>
+                    <td class='text-center'>@row.FechaContratacion.Value.ToString("dd/MM/yyyy")</td>
                     <td class='text-center'>@CUSTOMER.ANALYSIS.APPLICATION.CORE.Utilities.Utilidades.DoubleToString_FrontCO(row.PagoMensual ?? 0, 2)</td>
                 </tr>
             }
@@ -70,7 +70,20 @@ else
                     }
                 },
                 lengthChange: !1,
-                buttons: ["excel"]
+                buttons: [
+                    {
+                        text: 'Descargar reporte',
+                        action: function (e, dt, node, config) {
+                            DonwloadReporteExcel();
+                        }
+                    },
+                    {
+                        text: 'Enviar reporte',
+                        action: function (e, dt, node, config) {
+                            openModalEnviarMail();
+                        }
+                    },
+                ]
             }).buttons().container().appendTo("#datatable-documentos-emitidos_wrapper .col-md-6:eq(0)");
         // FIN DATATABLE
     });

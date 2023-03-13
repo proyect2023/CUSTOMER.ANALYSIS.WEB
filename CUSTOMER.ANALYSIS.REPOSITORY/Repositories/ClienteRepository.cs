@@ -87,10 +87,11 @@ namespace CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories
                 .Include(x => x.IdClienteNavigation)
                 .Include(x => x.IdClienteNavigation).ThenInclude(x => x.IdSectorNavigation)
                 .Where(x =>
-                    (
-                        x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Activo ||
-                        x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Cambiado
-                    )
+                    //(
+                    //    x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Activo ||
+                    //    x.Estado == APPLICATION.CORE.Contants.EstadoPlan.Cambiado
+                    //)
+                    x.IdClienteNavigation.Estado == true
                     && (x.FechaContratacion >= fechaInicio && x.FechaContratacion <= fechaFin)
                     && (EstadoPlan == 0 || x.Estado == EstadoPlan) 
                 //&& (!EstadoCliente || (x.IdClienteNavigation.Estado ?? false))

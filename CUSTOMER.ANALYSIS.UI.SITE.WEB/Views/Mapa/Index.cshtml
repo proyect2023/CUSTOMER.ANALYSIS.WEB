@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Mapa";
-    ViewBag.pTitle = "Mapa";
-    ViewBag.pageTitle = "Clientes";
+    ViewBag.Title = "Mapa de Marcador";
+    ViewBag.pTitle = "Mapa de Marcador";
+    ViewBag.pageTitle = "Mapas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -90,7 +90,6 @@
     <!-- Inicio Google Maps -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.ApiKeyGoogle&callback=initMap&libraries=visualization&v=weekly" defer></script>
-    @*<script src="~/js/heatmap.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>*@
     <script src="~/js/map.js?v=@CUSTOMER.ANALYSIS.UI.WEB.SITE.Parameters.WebSiteParameters.Version"></script>
     <!-- Fin Google Maps -->
 

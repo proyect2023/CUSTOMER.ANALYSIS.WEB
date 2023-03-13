@@ -1,4 +1,5 @@
-﻿using CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices;
+﻿using AGRICOLA.LOLANDIA.APPLICATION.CORE.Interfaces.Services;
+using CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Contants;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.DomainServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces;
@@ -8,10 +9,12 @@ using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.QueryServices;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Repositories;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.Services;
 using CUSTOMER.ANALYSIS.APPLICATION.CORE.Parameters;
+using CUSTOMER.ANALYSIS.APPLICATION.CORE.Services;
 using CUSTOMER.ANALYSIS.CROSSCUTTING.Interfaces;
 using CUSTOMER.ANALYSIS.CROSSCUTTING.LOG.Services;
 using CUSTOMER.ANALYSIS.INFRA.DATA.REPOSITORY.Repositories;
 using CUSTOMER.ANALYSIS.INFRA.QUERY.QueryServices;
+using CUSTOMER.ANALYSIS.INFRA.SERVICE.GEMBOX.Services;
 using CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.Services;
 using CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE.Services;
 using CUSTOMER.ANALYSIS.REPOSITORY.QueryServices;
@@ -44,6 +47,9 @@ namespace CUSTOMER.ANALYSIS.UI.WEB.SITE.Extensions
 
         public static void AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IReporteService, ReporteService>();
+            services.AddScoped<IEscribirArchivoService, EscribirArchivoService>();
+            services.AddScoped<IGemboxService, GemboxService>();
             services.AddScoped<IStorageService, DiskStorageService>();
             services.AddScoped<IAccountAppService, AccountAppService>();
             services.AddScoped<IMailDomainService, MailDomainService>();

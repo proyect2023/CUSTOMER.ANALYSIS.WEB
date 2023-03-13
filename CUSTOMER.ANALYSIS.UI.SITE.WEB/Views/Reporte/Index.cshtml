@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -60,6 +59,45 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div id="modal_renviomail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header " style="padding-bottom: 5px; padding-top: 5px;">
+                <h6 class="modal-title " style="color: white">
+                    <i class="fa fa-mail-bulk"></i> Enviar reporte
+                </h6>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body with-padding">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-info">
+                            Si se desea reenviar a más de un destinatario es necesario separar los correos con un punto y coma (;). <br />
+                            Ejemplo. <br />
+                            <b>ejemplo1@dominio.com;ejemplo2@dominio.com</b>
+                        </div>
+                        <label>
+                            Destinatarios <span class="mandatory">*</span>
+                        </label>
+                        <input type="text" id="txtdestinatario" class="form-control" style="width: 100%" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-bottom: 5px; padding-top: 5px">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" id="btnreenviomail" class="btn btn-success" onclick="EnviarReporte()">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <!-- Sweet Alerts js -->
     <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
@@ -165,6 +203,43 @@
                     footer: "Técnico, por favor consulte el archivo.log"
                 });
             });
+        }
+
+        function DonwloadReporteExcel(){
+            var estado = $("#animal").val();
+            var valorFechaInicio = $("#fechaInicio2").val();
+            var valorFechaFin = $("#fechaFin2").val();
+
+            window.location = "@Url.Action("DownloadReporte", "Reporte")" + '?estado=' + estado + '&fechaInicio=' + valorFechaInicio + '&fechaFin=' + valorFechaFin;
+        }
+
+        function openModalEnviarMail(){
+            $("#modal_renviomail").modal('show');
+        }
+
+        function EnviarReporte(){
+            var correo = $("#txtdestinatario").val();
+            var estado = $("#animal").val();
+            var valorFechaInicio = $("#fechaInicio2").val();
+            var valorFechaFin = $("#fechaFin2").val();
+                    
+            IniciarLoading();
+            $.post("@Url.Action("EnviarReporteMail", "Reporte")", {
+                estado: estado,
+                fechaInicio: valorFechaInicio,
+                fechaFin: valorFechaFin,
+                correo: correo
+            }).done(function(response){
+                DetenerLoading();
+                if (response.estado){
+                    MensajeExitoso("Reporte Enviado correctamente");
+                    $("#modal_renviomail").modal('hide');
+                } else{
+                    MensajeGrowl("Error al enviar el reporte");
+                }
+            }).fail(function(error){
+                MsgAjaxError(error);
+            })
         }
 
     </script>

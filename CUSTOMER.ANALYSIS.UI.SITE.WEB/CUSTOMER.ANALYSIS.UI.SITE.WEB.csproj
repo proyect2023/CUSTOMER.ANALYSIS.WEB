@@ -26,6 +26,7 @@
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.APPLICATION.CORE\CUSTOMER.ANALYSIS.APPLICATION.CORE.csproj" />
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG\CUSTOMER.ANALYSIS.CROSSCUTTING.LOG.csproj" />
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.CROSSCUTTING\CUSTOMER.ANALYSIS.CROSSCUTTING.csproj" />
+		<ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.GEMBOX\CUSTOMER.ANALYSIS.INFRA.SERVICE.GEMBOX.csproj" />
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL\CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.csproj" />
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE\CUSTOMER.ANALYSIS.INFRA.SERVICE.STORAGE.csproj" />
 		<ProjectReference Include="..\CUSTOMER.ANALYSIS.REPOSITORY\CUSTOMER.ANALYSIS.REPOSITORY.csproj" />
@@ -49,6 +50,10 @@
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\reportes\" />
 	</ItemGroup>
 	
 </Project>

@@ -12,5 +12,6 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.DTOs
         public string MensajeError { get; set; }
         public string CodigoError { get; set; }
         public dynamic Data { get; set; }
+        public string MensajeAdicional { get; set; }
     }
 }
