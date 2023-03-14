@@ -72,9 +72,15 @@ else
                 lengthChange: !1,
                 buttons: [
                     {
-                        text: 'Descargar reporte',
+                        text: 'Descargar Reporte (Excel)',
                         action: function (e, dt, node, config) {
                             DonwloadReporteExcel();
+                        }
+                    },
+                    {
+                        text: 'Descargar reporte (PDF)',
+                        action: function (e, dt, node, config) {
+                            DonwloadReportePdf();
                         }
                     },
                     {

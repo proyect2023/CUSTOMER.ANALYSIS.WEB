@@ -10,6 +10,6 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.Interfaces.AppServices
 {
     public interface IReporteService
     {
-        MethodResponseDto DownloadReporte(List<ClientePlan> result, string FileName, DateTime fechaInicio, DateTime fechaFin);
+        MethodResponseDto DownloadReporte(List<ClientePlan> result, string FileName, DateTime fechaInicio, DateTime fechaFin, string format);
     }
 }

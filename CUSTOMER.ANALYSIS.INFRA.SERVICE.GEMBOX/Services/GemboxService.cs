@@ -55,7 +55,13 @@ namespace CUSTOMER.ANALYSIS.INFRA.SERVICE.GEMBOX.Services
                 case "HTML":
                     return SaveOptions.HtmlDefault;
                 case "PDF":
-                    return SaveOptions.PdfDefault;
+                    {
+                        //GemBox.Document.Orientation = GemBox.Document.Orientation.
+                        PdfSaveOptions optionsPdf = new PdfSaveOptions() { SelectionType = SelectionType.EntireFile };
+                        optionsPdf.ConformanceLevel = PdfConformanceLevel.PdfA1a;
+                        return optionsPdf;// SaveOptions.PdfDefault;
+                    }
+                    
 
                 case "XPS":
                 case "PNG":

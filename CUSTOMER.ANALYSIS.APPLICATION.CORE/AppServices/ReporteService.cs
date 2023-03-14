@@ -33,7 +33,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
             this._gemboxService = gemboxService;
         }
 
-        public MethodResponseDto DownloadReporte(List<ClientePlan> result, string FileName, DateTime fechaInicio, DateTime fechaFin)
+        public MethodResponseDto DownloadReporte(List<ClientePlan> result, string FileName, DateTime fechaInicio, DateTime fechaFin, string format)
         {
             MethodResponseDto responseDto = new();
 
@@ -49,7 +49,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                     {
                         cont++;
                         byte[] archivo = new byte[] { };
-                        var resultDownload = _gemboxService.ConstruirReporte(item, FileName, "xlsx");
+                        var resultDownload = _gemboxService.ConstruirReporte(item, FileName, format);
                         if (resultDownload.TieneErrores) throw new Exception(resultDownload.MensajeError);
                         if (resultDownload.Estado)
                         {
@@ -59,7 +59,7 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                         archivos.Add(new ArchivoResponseDTO
                         {
                             Archivo = archivo,
-                            NombreArchivo = $"{Utilidades.GetHoraActual().ToString("yyyyMMdd")}_{fechaFin.ToString("yyyyMMdd")}_{cont}_{Guid.NewGuid().ToString()}.xlsx"
+                            NombreArchivo = $"{Utilidades.GetHoraActual().ToString("yyyyMMdd")}_{fechaFin.ToString("yyyyMMdd")}_{cont}_{Guid.NewGuid().ToString()}.{format}"
                         });
                     }
 
@@ -90,8 +90,8 @@ namespace CUSTOMER.ANALYSIS.APPLICATION.CORE.AppServices
                 }
                 else
                 {
-                    responseDto = _gemboxService.ConstruirReporte(result, FileName, "xlsx");
-                    responseDto.MensajeAdicional = ".xlsx";
+                    responseDto = _gemboxService.ConstruirReporte(result, FileName, format);
+                    responseDto.MensajeAdicional = $".{format}";
                 }
             }
             catch (Exception ex)

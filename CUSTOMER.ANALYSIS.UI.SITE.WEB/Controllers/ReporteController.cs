@@ -41,23 +41,23 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
         }
 
         [HttpGet]
-        public FileResult DownloadReporte(EstadoPlan estado, DateTime? fechaInicio, DateTime? fechaFin)
+        public FileResult DownloadReporte(EstadoPlan estado, DateTime? fechaInicio, DateTime? fechaFin, string formato)
         {
             byte[] archivo = new byte[] { };
-            string formato = "";
+            string contentType = "";
             fechaFin = new DateTime(fechaFin.Value.Year, fechaFin.Value.Month, fechaFin.Value.Day, 23, 59, 59);
             string filename = $"{Utilidades.GetHoraActual().ToString("yyyyMMddHHmmssfff")}";
 
             var result = _clienteRepository.GetClientePlan(fechaInicio.Value, fechaFin.Value, estado);
 
-            var resultDownload = _reporteService.DownloadReporte(result, "FormatoReporte.xlsx", fechaInicio.Value, fechaFin.Value);
+            var resultDownload = _reporteService.DownloadReporte(result, "FormatoReporte.xlsx", fechaInicio.Value, fechaFin.Value, formato);
             if (resultDownload.TieneErrores) throw new Exception(resultDownload.MensajeError);
             if (resultDownload.Estado)
             {
                 if (resultDownload.MensajeAdicional == ".zip")
                 {
                     string rutaCarpeta = resultDownload.Data;
-                    formato = "application/zip";
+                    contentType = "application/zip";
                     archivo = System.IO.File.ReadAllBytes(resultDownload.Data);
 
                     try
@@ -72,25 +72,25 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
                 }
                 else
                 {
-                    formato = "text/plain";
+                    contentType = "text/plain";
                     archivo = resultDownload.Data;
                 }
             }
 
-            return File(archivo, formato, filename + resultDownload.MensajeAdicional);
+            return File(archivo, contentType, filename + resultDownload.MensajeAdicional);
         }
 
         [HttpPost]
-        public IActionResult EnviarReporteMail(string correo, EstadoPlan estado, DateTime? fechaInicio, DateTime? fechaFin)
+        public IActionResult EnviarReporteMail(string correo, EstadoPlan estado, DateTime? fechaInicio, DateTime? fechaFin, string formato)
         {
             byte[] archivo = new byte[] { };
-            string formato = "";
+            string contentType = "";
             fechaFin = new DateTime(fechaFin.Value.Year, fechaFin.Value.Month, fechaFin.Value.Day, 23, 59, 59);
             string filename = $"{Utilidades.GetHoraActual().ToString("yyyyMMddHHmmssfff")}";
 
             var result = _clienteRepository.GetClientePlan(fechaInicio.Value, fechaFin.Value, estado);
 
-            var resultDownload = _reporteService.DownloadReporte(result, "FormatoReporte.xlsx", fechaInicio.Value, fechaFin.Value);
+            var resultDownload = _reporteService.DownloadReporte(result, "FormatoReporte.xlsx", fechaInicio.Value, fechaFin.Value, formato);
 
             if (resultDownload.TieneErrores) throw new Exception(resultDownload.MensajeError);
             if (resultDownload.Estado)
@@ -98,7 +98,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
                 if (resultDownload.MensajeAdicional == ".zip")
                 {
                     string rutaCarpeta = resultDownload.Data;
-                    formato = "application/zip";
+                    contentType = "application/zip";
                     archivo = System.IO.File.ReadAllBytes(resultDownload.Data);
 
                     try
@@ -113,7 +113,7 @@ namespace CUSTOMER.ANALYSIS.UI.SITE.WEB.Controllers
                 }
                 else
                 {
-                    formato = "text/plain";
+                    contentType = "text/plain";
                     archivo = resultDownload.Data;
                 }
 

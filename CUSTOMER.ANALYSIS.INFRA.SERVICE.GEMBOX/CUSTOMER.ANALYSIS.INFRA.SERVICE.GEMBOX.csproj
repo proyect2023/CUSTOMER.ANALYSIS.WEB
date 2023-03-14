@@ -8,6 +8,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="GemBox.Spreadsheet" Version="*" />
+		<PackageReference Include="GemBox.Document" Version="*" />
+		<PackageReference Include="GemBox.Pdf" Version="*" />
 	</ItemGroup>
 
 	<ItemGroup>

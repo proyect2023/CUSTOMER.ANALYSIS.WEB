@@ -83,6 +83,15 @@
                         <label>
                             Destinatarios <span class="mandatory">*</span>
                         </label>
+                       
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="formato">
+                            <option selected value="xlsx">Excel</option>
+                            <option value="pdf">Pdf</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
                         <input type="text" id="txtdestinatario" class="form-control" style="width: 100%" />
                     </div>
                 </div>
@@ -210,7 +219,15 @@
             var valorFechaInicio = $("#fechaInicio2").val();
             var valorFechaFin = $("#fechaFin2").val();
 
-            window.location = "@Url.Action("DownloadReporte", "Reporte")" + '?estado=' + estado + '&fechaInicio=' + valorFechaInicio + '&fechaFin=' + valorFechaFin;
+            window.location = "@Url.Action("DownloadReporte", "Reporte")" + '?formato=xlsx&estado=' + estado + '&fechaInicio=' + valorFechaInicio + '&fechaFin=' + valorFechaFin;
+        }
+        
+        function DonwloadReportePdf(){
+            var estado = $("#animal").val();
+            var valorFechaInicio = $("#fechaInicio2").val();
+            var valorFechaFin = $("#fechaFin2").val();
+
+            window.location = "@Url.Action("DownloadReporte", "Reporte")" + '?formato=pdf&estado=' + estado + '&fechaInicio=' + valorFechaInicio + '&fechaFin=' + valorFechaFin;
         }
 
         function openModalEnviarMail(){
@@ -218,6 +235,7 @@
         }
 
         function EnviarReporte(){
+            var formato = $("#formato").val();
             var correo = $("#txtdestinatario").val();
             var estado = $("#animal").val();
             var valorFechaInicio = $("#fechaInicio2").val();
@@ -228,7 +246,8 @@
                 estado: estado,
                 fechaInicio: valorFechaInicio,
                 fechaFin: valorFechaFin,
-                correo: correo
+                correo: correo,
+                formato: formato
             }).done(function(response){
                 DetenerLoading();
                 if (response.estado){
