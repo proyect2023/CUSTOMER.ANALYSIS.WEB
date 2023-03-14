@@ -72,15 +72,30 @@ else
                 lengthChange: !1,
                 buttons: [
                     {
-                        text: 'Descargar Reporte (Excel)',
+                        text: 'Excel',
                         action: function (e, dt, node, config) {
                             DonwloadReporteExcel();
                         }
                     },
                     {
-                        text: 'Descargar reporte (PDF)',
-                        action: function (e, dt, node, config) {
-                            DonwloadReportePdf();
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        customize: function (doc, config) {
+                            var tableNode;
+                            for (i = 0; i < doc.content.length; ++i) {
+                                if (doc.content[i].table !== undefined) {
+                                    tableNode = doc.content[i];
+                                    break;
+                                }
+                            }
+
+                            var rowIndex = 0;
+                            var tableColumnCount = tableNode.table.body[rowIndex].length;
+
+                            if (tableColumnCount > 5) {
+                                doc.pageOrientation = 'landscape';
+                            }
                         }
                     },
                     {

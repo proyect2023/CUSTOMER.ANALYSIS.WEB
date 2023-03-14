@@ -20,6 +20,7 @@ namespace CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.Services
                 EnableSsl = GlobalSettings.ConfiguracionMailSsl,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
+                TargetName = "Análisis Intercom",
                 Credentials = new NetworkCredential(GlobalSettings.ConfiguracionMailUser, GlobalSettings.ConfiguracionMailPassword)
             };
         }
@@ -44,6 +45,7 @@ namespace CUSTOMER.ANALYSIS.INFRA.SERVICE.MAIL.Services
                 {
                     MailMessage email = new MailMessage(GlobalSettings.ConfiguracionMailUser, item, mail.Asunto, mail.Mensaje);
                     email.IsBodyHtml = esHtlm;
+                    
 
                     foreach (var attachment in attachments)
                     {
